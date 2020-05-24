@@ -1,26 +1,32 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"log"
+	"errors"
+	"github.com/rodrigocaldeira/sistema_facil/database"
 	"github.com/rodrigocaldeira/sistema_facil/estrutura"
 	"github.com/rodrigocaldeira/sistema_facil/parser"
-	"errors"
+	"io/ioutil"
+	"log"
+	"os"
 	"path"
 	"strings"
-	"os"
 )
 
 func main() {
 	cadastros, err := lerCadastros()
 
 	if err != nil {
-		log.Panic(err)	
+		log.Panic(err)
 	}
 
+	if err = database.IniciarDatabase(); err != nil {
+		log.Panic(err)
+	}
+
+	defer database.FecharDatabase()
+
 	for _, cadastro := range cadastros {
-		fmt.Printf("%v", cadastro)	
+		database.AtualizarCadastro(&cadastro)
 	}
 }
 
@@ -53,7 +59,7 @@ func lerCadastros() ([]estrutura.Cadastro, error) {
 		}
 
 		cadastro := estrutura.Cadastro{
-			Nome: nomeDoCadastro,
+			Nome:   nomeDoCadastro,
 			Campos: campos,
 		}
 
@@ -64,21 +70,21 @@ func lerCadastros() ([]estrutura.Cadastro, error) {
 }
 
 func lerArquivo(caminhoDoArquivo string) (string, error) {
-		ponteiroDoArquivo, err := os.Open(caminhoDoArquivo)
+	ponteiroDoArquivo, err := os.Open(caminhoDoArquivo)
 
-		if err != nil {
-			return "", err
-		}
+	if err != nil {
+		return "", err
+	}
 
-		defer ponteiroDoArquivo.Close()
+	defer ponteiroDoArquivo.Close()
 
-		bytesDoArquivo, err := ioutil.ReadAll(ponteiroDoArquivo)
+	bytesDoArquivo, err := ioutil.ReadAll(ponteiroDoArquivo)
 
-		if err != nil {
-			return "", err
-		}
+	if err != nil {
+		return "", err
+	}
 
-		conteudoDoArquivo := string(bytesDoArquivo)
+	conteudoDoArquivo := string(bytesDoArquivo)
 
-		return conteudoDoArquivo, nil
+	return conteudoDoArquivo, nil
 }
