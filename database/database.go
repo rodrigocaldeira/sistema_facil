@@ -3,6 +3,7 @@ package database
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/HouzuoGuo/tiedot/db"
 	"github.com/rodrigocaldeira/sistema_facil/estrutura"
@@ -13,6 +14,11 @@ var myDB *db.DB = nil
 
 func IniciarDatabase() error {
 	var err error
+
+	if _, err = os.Stat(caminhoDB); os.IsNotExist(err) {
+		os.Mkdir(caminhoDB, 0755)
+	}
+
 	myDB, err = db.OpenDB(caminhoDB)
 	return err
 }
@@ -27,7 +33,9 @@ func AtualizarCadastro(cadastro *estrutura.Cadastro) error {
 		return errors.New("A base de dados não foi iniciada.")
 	}
 
-	myDB.ForceUse(cadastro.Nome)
+	if !myDB.ColExists(cadastro.Nome) {
+		myDB.Create(cadastro.Nome)
+	}
 
 	fmt.Printf("Cadastro %s atualizado\n", cadastro.Nome)
 
