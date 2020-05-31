@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"github.com/rodrigocaldeira/sistema_facil/api"
 	"github.com/rodrigocaldeira/sistema_facil/database"
 	"github.com/rodrigocaldeira/sistema_facil/estrutura"
 	"github.com/rodrigocaldeira/sistema_facil/parser"
@@ -28,6 +29,8 @@ func main() {
 	for _, cadastro := range cadastros {
 		database.AtualizarCadastro(&cadastro)
 	}
+
+	api.InitApi(cadastros)
 }
 
 func lerCadastros() ([]estrutura.Cadastro, error) {
@@ -58,7 +61,13 @@ func lerCadastros() ([]estrutura.Cadastro, error) {
 			return nil, err
 		}
 
+		camposNaLista, err := parser.LerLista(conteudoDoArquivo)
+		if err != nil {
+			return nil, err
+		}
+
 		cadastro := estrutura.NewCadastro(nomeDoCadastro, campos)
+		cadastro.AtribuirLista(camposNaLista)
 
 		cadastros = append(cadastros, cadastro)
 	}
