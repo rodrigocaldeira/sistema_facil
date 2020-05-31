@@ -118,10 +118,7 @@ func lerCampo(linha string) (*estrutura.Campo, error) {
 		return nil, errors.New("Tipo inválido")
 	}
 
-	return &estrutura.Campo{
-		Nome: nome,
-		Tipo: tipo,
-	}, nil
+	return estrutura.NewCampo(nome, tipo), nil
 
 }
 

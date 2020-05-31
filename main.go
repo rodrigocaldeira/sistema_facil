@@ -58,10 +58,7 @@ func lerCadastros() ([]estrutura.Cadastro, error) {
 			return nil, err
 		}
 
-		cadastro := estrutura.Cadastro{
-			Nome:   nomeDoCadastro,
-			Campos: campos,
-		}
+		cadastro := estrutura.NewCadastro(nomeDoCadastro, campos)
 
 		cadastros = append(cadastros, cadastro)
 	}
