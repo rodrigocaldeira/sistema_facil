@@ -22,7 +22,7 @@ func LerCampos(conteudoDoArquivo string) ([]*estrutura.Campo, error) {
 	var campos []*estrutura.Campo
 
 	for _, linha := range linhas {
-		if strings.Trim(linha, "\r") == "Campos" {
+		if strings.TrimSpace(linha) == "Campos" {
 			achouOsCampos = true
 			continue
 		}
@@ -49,6 +49,52 @@ func LerCampos(conteudoDoArquivo string) ([]*estrutura.Campo, error) {
 	}
 
 	return campos, nil
+}
+
+func LerLista(conteudoDoArquivo string) ([]string, error) {
+	linhas := strings.Split(conteudoDoArquivo, "\n")
+
+	var lista []string
+	var err error
+
+	achouLista := false
+
+	for _, linha := range linhas {
+		if strings.TrimSpace(linha) == "Lista" {
+			achouLista = true
+			continue
+		}
+
+		if strings.HasPrefix(linha, "\t") {
+			if achouLista {
+				lista, err = lerLista(linha)
+
+				if err != nil {
+					return nil, err
+				}
+			}
+		} else {
+			if achouLista {
+				break
+			}
+		}
+	}
+
+	if len(lista) == 0 {
+		return nil, errors.New("Arquivo sem lista definida")
+	}
+
+	return lista, nil
+}
+
+func lerLista(linha string) ([]string, error) {
+	lista := strings.Split(linha, ",")
+
+	for index, campo := range lista {
+		lista[index] = strings.TrimSpace(campo)
+	}
+
+	return lista, nil
 }
 
 func lerCampo(linha string) (*estrutura.Campo, error) {

@@ -36,6 +36,54 @@ Campos
 	Nome, Tipo que não existe...
 `
 
+var arquivoComLista string = `
+Lista
+	Nome, Email
+`
+
+var arquivoComTagDeListaMasSemLista string = `
+Lista
+`
+
+var arquivoComListaComUmCampo string = `
+Lista
+	Nome
+`
+
+func TestLerLista(t *testing.T) {
+	lista, err := LerLista(arquivoComLista)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, campo := range lista {
+		if campo != "Nome" && campo != "Email" {
+			t.Fatal(fmt.Sprintf("Campo na lista inválido! Achei esse aqui: %s", campo))
+		}
+	}
+}
+
+func TestArquivoComTagDeListaMasSemLista(t *testing.T) {
+	_, err := LerLista(arquivoComTagDeListaMasSemLista)
+
+	if err == nil {
+		t.Fatal("Deveria ter dado erro de arquivo sem lista definida")
+	}
+
+	if err.Error() != "Arquivo sem lista definida" {
+		t.Error(fmt.Sprintf("Deveria ter identificado que a lista não está definida, mas deu outro erro: %s", err))
+	}
+}
+
+func TestArquivoComListaComUmCampo(t *testing.T) {
+	_, err := LerLista(arquivoComListaComUmCampo)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestLerCampos(t *testing.T) {
 	_, err := LerCampos(arquivoValido)
 
