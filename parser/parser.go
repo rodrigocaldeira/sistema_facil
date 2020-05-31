@@ -6,10 +6,6 @@ import (
 	"strings"
 )
 
-var tiposValidos []string = []string{
-	"Texto",
-}
-
 func LerCampos(conteudoDoArquivo string) ([]*estrutura.Campo, error) {
 	linhas := strings.Split(conteudoDoArquivo, "\n")
 
@@ -98,7 +94,6 @@ func lerLista(linha string) ([]string, error) {
 }
 
 func lerCampo(linha string) (*estrutura.Campo, error) {
-
 	linha = strings.Trim(linha, "\t")
 
 	definicaoDoCampo := strings.Split(linha, ",")
@@ -114,19 +109,12 @@ func lerCampo(linha string) (*estrutura.Campo, error) {
 		return nil, errors.New("Arquivo com campo mal formatado")
 	}
 
-	if !tipoDeCampoValido(tipo) {
-		return nil, errors.New("Tipo inválido")
+	campo, err := estrutura.NewCampo(nome, tipo)
+
+	if err != nil {
+		return nil, err
 	}
 
-	return estrutura.NewCampo(nome, tipo), nil
+	return campo, nil
 
-}
-
-func tipoDeCampoValido(tipo string) bool {
-	for _, tipoValido := range tiposValidos {
-		if tipo == tipoValido {
-			return true
-		}
-	}
-	return false
 }

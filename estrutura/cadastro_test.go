@@ -6,10 +6,10 @@ import (
 )
 
 func criarCadastro() Cadastro {
-	var campos []*Campo = []*Campo{
-		NewCampo("Nome", "Texto"),
-		NewCampo("Email", "Texto"),
-	}
+	campoNome, _ := NewCampo("Nome", "Texto")
+	campoEmail, _ := NewCampo("Email", "Texto")
+
+	var campos []*Campo = []*Campo{campoNome, campoEmail}
 
 	return NewCadastro("Usuário", campos)
 }
