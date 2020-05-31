@@ -34,3 +34,15 @@ func (c Cadastro) AtribuirLista(lista []string) error {
 	}
 	return nil
 }
+
+func (c Cadastro) CamposDaLista() []*Campo {
+	var campos []*Campo
+
+	for _, campo := range c.Campos {
+		if campo.TaNaLista {
+			campos = append(campos, campo)
+		}
+	}
+
+	return campos
+}

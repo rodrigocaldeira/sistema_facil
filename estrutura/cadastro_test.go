@@ -43,3 +43,35 @@ func TestListaComCampoQueNaoFazParteDoCadastro(t *testing.T) {
 		t.Error("Deveria ter dado erro pois o campo não está na lista")
 	}
 }
+
+func TestRetornandoOsCamposDaLista(t *testing.T) {
+	cadastro := criarCadastro()
+
+	lista := []string{"Nome", "Email"}
+
+	cadastro.AtribuirLista(lista)
+
+	camposDaLista := cadastro.CamposDaLista()
+
+	if len(camposDaLista) != len(cadastro.Campos) {
+		t.Fatal("A lista deveria estar completa!")
+	}
+}
+
+func TestRetonandoOCampoNomeComoEstandoNaLista(t *testing.T) {
+	cadastro := criarCadastro()
+
+	lista := []string{"Nome"}
+
+	cadastro.AtribuirLista(lista)
+
+	camposDaLista := cadastro.CamposDaLista()
+
+	if len(camposDaLista) != 1 {
+		t.Fatal("Deveria ter retornado ao menos um campo!")
+	}
+
+	if camposDaLista[0].Nome != "Nome" {
+		t.Fatal("Deveria ter retornaro o campo Nome como estando na lista!")
+	}
+}
