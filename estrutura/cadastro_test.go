@@ -72,6 +72,35 @@ func TestRetonandoOCampoNomeComoEstandoNaLista(t *testing.T) {
 	}
 
 	if camposDaLista[0].Nome != "Nome" {
-		t.Fatal("Deveria ter retornaro o campo Nome como estando na lista!")
+		t.Fatal("Deveria ter retornado o campo Nome como estando na lista!")
+	}
+}
+
+func TestValidandoValoresDeUmCadastro(t *testing.T) {
+	cadastro := criarCadastro()
+
+	valores := map[string]interface{}{
+		"nome":  "Rodrigo Caldeira",
+		"email": "rodrigocaldeira@gmail.com",
+	}
+
+	err := cadastro.ValidarValores(valores)
+
+	if err != nil {
+		t.Error(fmt.Sprintf("Deveria ter validado os valores, mas deu erro: %s", err))
+	}
+}
+
+func TestValidandoComValorInexistenteNoCadastro(t *testing.T) {
+	cadastro := criarCadastro()
+
+	valores := map[string]interface{}{
+		"campo_inexistente": "qualquer valor",
+	}
+
+	err := cadastro.ValidarValores(valores)
+
+	if err == nil {
+		t.Error("Deveria ter dado erro pois o campo campo_inexistente não está no cadastro.")
 	}
 }

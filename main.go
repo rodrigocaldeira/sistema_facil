@@ -20,14 +20,14 @@ func main() {
 		log.Panic(err)
 	}
 
-	if err = database.IniciarDatabase(); err != nil {
+	if err = database.IniciarDatabase(""); err != nil {
 		log.Panic(err)
 	}
 
 	defer database.FecharDatabase()
 
 	for _, cadastro := range cadastros {
-		database.AtualizarCadastro(&cadastro)
+		database.ConfigurarCadastro(&cadastro)
 	}
 
 	api.InitApi(cadastros)

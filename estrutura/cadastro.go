@@ -3,6 +3,7 @@ package estrutura
 import (
 	"errors"
 	"fmt"
+	"strings"
 )
 
 type Cadastro struct {
@@ -45,4 +46,21 @@ func (c Cadastro) CamposDaLista() []*Campo {
 	}
 
 	return campos
+}
+
+func (c Cadastro) ValidarValores(valores map[string]interface{}) error {
+	for chave, _ := range valores {
+		achouOCampo := false
+		for _, campo := range c.Campos {
+			if strings.ToLower(campo.Nome) == chave {
+				achouOCampo = true
+			}
+		}
+
+		if !achouOCampo {
+			return fmt.Errorf("O campo %s não faz parte deste cadastro", chave)
+		}
+	}
+
+	return nil
 }
