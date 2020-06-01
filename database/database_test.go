@@ -67,3 +67,72 @@ func TestAtualizarCadastro(t *testing.T) {
 		t.Error(fmt.Sprintf("Deveria ter atualizado o cadastro, mas deu erro: %s", err))
 	}
 }
+
+func TestBuscarUmCadastro(t *testing.T) {
+	cadastro := setup()
+	defer FecharDatabase()
+
+	valores := map[string]interface{}{
+		"nome":  "Rodrigo Caldeira",
+		"email": "rodrigocaldeira@gmail.com",
+	}
+
+	id, _ := IncluirCadastro(cadastro, valores)
+
+	valoresSalvos, err := BuscarCadastro(cadastro, id)
+
+	if err != nil {
+		t.Error(fmt.Sprintf("Deveria ter retornado os valores do cadastro, mas deu erro: %s", err))
+	}
+
+	if valoresSalvos["nome"] != valores["nome"] && valoresSalvos["email"] != valores["email"] {
+		t.Error(fmt.Sprintf("Sei lá o que veio: %v", valoresSalvos))
+	}
+}
+
+func TestListarCadastros(t *testing.T) {
+	cadastro := setup()
+	defer FecharDatabase()
+
+	valores := map[string]interface{}{
+		"nome":  "Rodrigo Caldeira",
+		"email": "rodrigocaldeira@gmail.com",
+	}
+
+	IncluirCadastro(cadastro, valores)
+
+	valores["nome"] = "José da Silva"
+	valores["email"] = "jose@gmail.com"
+
+	IncluirCadastro(cadastro, valores)
+
+	resultados, err := ListarCadastros(cadastro)
+
+	if err != nil {
+		t.Error(fmt.Sprintf("Deveria ter listado os cadastros, mas deu erro: %s", err))
+	}
+
+	if resultados == nil {
+		t.Error("Por algum motivo, não retornou nada...")
+	}
+
+	fmt.Printf("%v\n", resultados)
+}
+
+func TestDeletarCadastro(t *testing.T) {
+	cadastro := setup()
+	defer FecharDatabase()
+
+	valores := map[string]interface{}{
+		"nome":  "Rodrigo Caldeira",
+		"email": "rodrigocaldeira@gmail.com",
+	}
+
+	id, _ := IncluirCadastro(cadastro, valores)
+
+	err := DeletarCadastro(cadastro, id)
+
+	if err != nil {
+		t.Error(fmt.Sprintf("Deveria ter excluído o cadastro, mas deu erro: %s", err))
+	}
+}

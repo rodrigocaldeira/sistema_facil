@@ -1,6 +1,7 @@
 package database
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -64,6 +65,57 @@ func AlterarCadastro(cadastro estrutura.Cadastro, id int, valores map[string]int
 
 	if err == nil {
 		fmt.Printf("Valores alterados com sucesso em %s\n", cadastro.Nome)
+	}
+
+	return err
+}
+
+func BuscarCadastro(cadastro estrutura.Cadastro, id int) (map[string]interface{}, error) {
+	collection := myDB.Use(cadastro.Nome)
+
+	valores, err := collection.Read(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return valores, nil
+}
+
+type Resultado struct {
+	Id      int
+	Valores map[string]interface{}
+}
+
+func ListarCadastros(cadastro estrutura.Cadastro) ([]Resultado, error) {
+	collection := myDB.Use(cadastro.Nome)
+
+	var resultados []Resultado
+
+	collection.ForEachDoc(func(id int, docContent []byte) bool {
+		var doc map[string]interface{}
+		if err := json.Unmarshal(docContent, &doc); err != nil {
+			fmt.Printf("Erro ao buscar o cadastro: %v\n", err)
+		}
+
+		resultados = append(resultados, Resultado{
+			Id:      id,
+			Valores: doc,
+		})
+
+		return true
+	})
+
+	return resultados, nil
+}
+
+func DeletarCadastro(cadastro estrutura.Cadastro, id int) error {
+	collection := myDB.Use(cadastro.Nome)
+
+	err := collection.Delete(id)
+
+	if err == nil {
+		fmt.Printf("Cadastro excluído de %s com sucesso. id: %d\n", cadastro.Nome, id)
 	}
 
 	return err
