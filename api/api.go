@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func InitApi(cadastros []estrutura.Cadastro) {
+func InitApi(cadastros []*estrutura.Cadastro) {
 	apiCadastros := func(w http.ResponseWriter, _ *http.Request) {
 		json.NewEncoder(w).Encode(cadastros)
 	}

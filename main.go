@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"github.com/rodrigocaldeira/sistema_facil/api"
-	"github.com/rodrigocaldeira/sistema_facil/database"
 	"github.com/rodrigocaldeira/sistema_facil/estrutura"
 	"github.com/rodrigocaldeira/sistema_facil/parser"
 	"io/ioutil"
@@ -20,20 +19,10 @@ func main() {
 		log.Panic(err)
 	}
 
-	if err = database.IniciarDatabase(""); err != nil {
-		log.Panic(err)
-	}
-
-	defer database.FecharDatabase()
-
-	for _, cadastro := range cadastros {
-		database.ConfigurarCadastro(&cadastro)
-	}
-
 	api.InitApi(cadastros)
 }
 
-func lerCadastros() ([]estrutura.Cadastro, error) {
+func lerCadastros() ([]*estrutura.Cadastro, error) {
 	arquivos, err := ioutil.ReadDir("./cadastros/")
 
 	if err != nil {
@@ -44,7 +33,7 @@ func lerCadastros() ([]estrutura.Cadastro, error) {
 		return nil, errors.New("Não existe nenhum cadastro na pasta cadastros")
 	}
 
-	var cadastros []estrutura.Cadastro
+	var cadastros []*estrutura.Cadastro
 
 	for _, arquivo := range arquivos {
 		nomeDoArquivo := arquivo.Name()

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func criarCadastro() Cadastro {
+func criarCadastro() *Cadastro {
 	campoNome, _ := NewCampo("Nome", "Texto")
 	campoEmail, _ := NewCampo("Email", "Texto")
 

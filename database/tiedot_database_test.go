@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func criarCadastro() estrutura.Cadastro {
+func criarCadastro() *estrutura.Cadastro {
 	campoNome, _ := estrutura.NewCampo("Nome", "Texto")
 	campoEmail, _ := estrutura.NewCampo("Email", "Texto")
 
@@ -16,28 +16,31 @@ func criarCadastro() estrutura.Cadastro {
 	return estrutura.NewCadastro("Usuário", campos)
 }
 
-func iniciarBaseDeTeste() {
+var testDB Database
+
+func criarDatabase() {
 	caminhoDB, _ := ioutil.TempDir("", "teste_db_sistema_facil")
-	IniciarDatabase(caminhoDB)
+	testDB = NewTiedotDatabase(caminhoDB)
+	testDB.Iniciar()
 }
 
-func setup() estrutura.Cadastro {
-	iniciarBaseDeTeste()
+func setup() *estrutura.Cadastro {
+	criarDatabase()
 	cadastro := criarCadastro()
-	ConfigurarCadastro(&cadastro)
+	testDB.Configurar(cadastro)
 	return cadastro
 }
 
 func TestIncluirCadastro(t *testing.T) {
 	cadastro := setup()
-	defer FecharDatabase()
+	defer testDB.Fechar()
 
 	valores := map[string]interface{}{
 		"nome":  "Rodrigo Caldeira",
 		"email": "rodrigocaldeira@gmail.com",
 	}
 
-	id, err := IncluirCadastro(cadastro, valores)
+	id, err := testDB.Incluir(cadastro, valores)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Deveria ter incluído o cadastro, mas deu erro: %s", err))
@@ -50,18 +53,18 @@ func TestIncluirCadastro(t *testing.T) {
 
 func TestAtualizarCadastro(t *testing.T) {
 	cadastro := setup()
-	defer FecharDatabase()
+	defer testDB.Fechar()
 
 	valores := map[string]interface{}{
 		"nome":  "Rodrigo Caldeira",
 		"email": "rodrigocaldeira@gmail.com",
 	}
 
-	id, _ := IncluirCadastro(cadastro, valores)
+	id, _ := testDB.Incluir(cadastro, valores)
 
 	valores["nome"] = "Rodrigo Caldeira de Paula Lima"
 
-	err := AlterarCadastro(cadastro, id, valores)
+	err := testDB.Alterar(cadastro, id, valores)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Deveria ter atualizado o cadastro, mas deu erro: %s", err))
@@ -70,16 +73,16 @@ func TestAtualizarCadastro(t *testing.T) {
 
 func TestBuscarUmCadastro(t *testing.T) {
 	cadastro := setup()
-	defer FecharDatabase()
+	defer testDB.Fechar()
 
 	valores := map[string]interface{}{
 		"nome":  "Rodrigo Caldeira",
 		"email": "rodrigocaldeira@gmail.com",
 	}
 
-	id, _ := IncluirCadastro(cadastro, valores)
+	id, _ := testDB.Incluir(cadastro, valores)
 
-	valoresSalvos, err := BuscarCadastro(cadastro, id)
+	valoresSalvos, err := testDB.Buscar(cadastro, id)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Deveria ter retornado os valores do cadastro, mas deu erro: %s", err))
@@ -92,21 +95,21 @@ func TestBuscarUmCadastro(t *testing.T) {
 
 func TestListarCadastros(t *testing.T) {
 	cadastro := setup()
-	defer FecharDatabase()
+	defer testDB.Fechar()
 
 	valores := map[string]interface{}{
 		"nome":  "Rodrigo Caldeira",
 		"email": "rodrigocaldeira@gmail.com",
 	}
 
-	IncluirCadastro(cadastro, valores)
+	testDB.Incluir(cadastro, valores)
 
 	valores["nome"] = "José da Silva"
 	valores["email"] = "jose@gmail.com"
 
-	IncluirCadastro(cadastro, valores)
+	testDB.Incluir(cadastro, valores)
 
-	resultados, err := ListarCadastros(cadastro)
+	resultados, err := testDB.Listar(cadastro)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Deveria ter listado os cadastros, mas deu erro: %s", err))
@@ -121,16 +124,16 @@ func TestListarCadastros(t *testing.T) {
 
 func TestDeletarCadastro(t *testing.T) {
 	cadastro := setup()
-	defer FecharDatabase()
+	defer testDB.Fechar()
 
 	valores := map[string]interface{}{
 		"nome":  "Rodrigo Caldeira",
 		"email": "rodrigocaldeira@gmail.com",
 	}
 
-	id, _ := IncluirCadastro(cadastro, valores)
+	id, _ := testDB.Incluir(cadastro, valores)
 
-	err := DeletarCadastro(cadastro, id)
+	err := testDB.Deletar(cadastro, id)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Deveria ter excluído o cadastro, mas deu erro: %s", err))

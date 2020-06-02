@@ -11,14 +11,14 @@ type Cadastro struct {
 	Campos []*Campo
 }
 
-func NewCadastro(nome string, campos []*Campo) Cadastro {
-	return Cadastro{
+func NewCadastro(nome string, campos []*Campo) *Cadastro {
+	return &Cadastro{
 		Nome:   nome,
 		Campos: campos,
 	}
 }
 
-func (c Cadastro) AtribuirLista(lista []string) error {
+func (c *Cadastro) AtribuirLista(lista []string) error {
 	for _, campoNaLista := range lista {
 		achouOCampo := false
 		for _, campo := range c.Campos {
@@ -36,7 +36,7 @@ func (c Cadastro) AtribuirLista(lista []string) error {
 	return nil
 }
 
-func (c Cadastro) CamposDaLista() []*Campo {
+func (c *Cadastro) CamposDaLista() []*Campo {
 	var campos []*Campo
 
 	for _, campo := range c.Campos {
@@ -48,7 +48,7 @@ func (c Cadastro) CamposDaLista() []*Campo {
 	return campos
 }
 
-func (c Cadastro) ValidarValores(valores map[string]interface{}) error {
+func (c *Cadastro) ValidarValores(valores map[string]interface{}) error {
 	for chave, _ := range valores {
 		achouOCampo := false
 		for _, campo := range c.Campos {
