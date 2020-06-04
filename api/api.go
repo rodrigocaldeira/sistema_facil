@@ -7,12 +7,18 @@ import (
 	"net/http"
 )
 
-func InitApi(cadastros []*estrutura.Cadastro) {
-	apiCadastros := func(w http.ResponseWriter, _ *http.Request) {
-		json.NewEncoder(w).Encode(cadastros)
-	}
+type ApiServer struct {
+	Cadastros []*estrutura.Cadastro
+}
 
-	http.HandleFunc("/api/cadastros", apiCadastros)
+func (server *ApiServer) GetCadastros(w http.ResponseWriter, _ *http.Request) {
+	json.NewEncoder(w).Encode(server.Cadastros)
+}
+
+func InitApi(cadastros []*estrutura.Cadastro) {
+	server := &ApiServer{Cadastros: cadastros}
+
+	http.HandleFunc("/api/cadastros", server.GetCadastros)
 
 	log.Println("Servidor pronto na porta 8080")
 
