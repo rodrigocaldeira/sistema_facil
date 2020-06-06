@@ -22,7 +22,6 @@ func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 	var request map[string]interface{}
 	var valores map[string]interface{}
 
-	var cadastro *estrutura.Cadastro
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
 		log.Println(err)
@@ -30,15 +29,9 @@ func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	cadastro := server.buscarCadastro(request["__cadastro"].(string))
 	valores = request["__valores"].(map[string]interface{})
 	log.Printf("%+v", valores)
-
-	for _, c := range server.Cadastros {
-		if c.Nome == request["__cadastro"] {
-			cadastro = c
-			break
-		}
-	}
 
 	id, err := server.Database.Incluir(cadastro, valores)
 
@@ -51,10 +44,121 @@ func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(strconv.Itoa(id)))
 }
 
+func (server *ApiServer) Alterar(w http.ResponseWriter, r *http.Request) {
+	var request map[string]interface{}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("%v", request)
+
+	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	id, err := strconv.Atoi(request["id"].(string))
+	valores := request["__valores"].(map[string]interface{})
+
+	err = server.Database.Alterar(cadastro, id, valores)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao alterar", http.StatusBadRequest)
+		return
+	}
+}
+
+func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
+	var request map[string]interface{}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("%v", request)
+
+	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	id, err := strconv.Atoi(request["id"].(string))
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		return
+	}
+
+	valores, err := server.Database.Buscar(cadastro, id)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		return
+	}
+
+	json.NewEncoder(w).Encode(valores)
+}
+
+func (server *ApiServer) Listar(w http.ResponseWriter, r *http.Request) {
+	var request map[string]interface{}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao listar", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("%v", request)
+
+	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+
+	resultados, err := server.Database.Listar(cadastro)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao listar", http.StatusBadRequest)
+		return
+	}
+
+	var response []map[string]interface{}
+
+	for _, resultado := range resultados {
+		registro := make(map[string]interface{})
+		registro["id"] = strconv.Itoa(resultado.Id)
+
+		for k, v := range resultado.Valores {
+			registro[k] = v
+		}
+
+		response = append(response, registro)
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+func (server *ApiServer) buscarCadastro(nome string) *estrutura.Cadastro {
+	for _, cadastro := range server.Cadastros {
+		if cadastro.Nome == nome {
+			return cadastro
+		}
+	}
+	return nil
+}
+
 func InitApi(cadastros []*estrutura.Cadastro, db database.Database) {
 	server := &ApiServer{Cadastros: cadastros, Database: db}
 
 	http.HandleFunc("/api/cadastros", server.GetCadastros)
+	http.HandleFunc("/api/buscar", server.Buscar)
+	http.HandleFunc("/api/incluir", server.Incluir)
+	http.HandleFunc("/api/alterar", server.Alterar)
+	http.HandleFunc("/api/listar", server.Listar)
 
 	log.Println("Servidor pronto na porta 8080")
 

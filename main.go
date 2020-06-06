@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"github.com/rodrigocaldeira/sistema_facil/api"
+	"github.com/rodrigocaldeira/sistema_facil/database"
 	"github.com/rodrigocaldeira/sistema_facil/estrutura"
 	"github.com/rodrigocaldeira/sistema_facil/parser"
 	"io/ioutil"
@@ -14,12 +15,29 @@ import (
 
 func main() {
 	cadastros, err := lerCadastros()
+	db := iniciarDatabase(cadastros)
+	defer db.Fechar()
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	api.InitApi(cadastros)
+	api.InitApi(cadastros, db)
+}
+
+func iniciarDatabase(cadastros []*estrutura.Cadastro) database.Database {
+	db := database.NewTiedotDatabase("./db")
+	db.Iniciar()
+
+	for _, cadastro := range cadastros {
+		err := db.Configurar(cadastro)
+
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return db
 }
 
 func lerCadastros() ([]*estrutura.Cadastro, error) {
