@@ -217,6 +217,10 @@ func InitApi(cadastros []*estrutura.Cadastro, db database.Database) {
 	http.HandleFunc("/api/listar", server.Listar)
 	http.HandleFunc("/api/deletar", server.Deletar)
 
+	fs := http.FileServer(http.Dir("front"))
+
+	http.Handle("/", http.StripPrefix("/", fs))
+
 	log.Println("Servidor pronto na porta 8080")
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
