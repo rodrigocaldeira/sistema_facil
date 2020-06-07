@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/rodrigocaldeira/sistema_facil/database"
 	"github.com/rodrigocaldeira/sistema_facil/estrutura"
 	"log"
@@ -30,6 +31,10 @@ func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	if cadastro == nil {
+		http.Error(w, "Cadastro desconhecido", http.StatusNotFound)
+		return
+	}
 	valores = request["__valores"].(map[string]interface{})
 	log.Printf("%+v", valores)
 
@@ -51,13 +56,17 @@ func (server *ApiServer) Alterar(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Println(err)
-		http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		http.Error(w, "Erro ao Alterar", http.StatusBadRequest)
 		return
 	}
 
 	log.Printf("%v", request)
 
 	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	if cadastro == nil {
+		http.Error(w, "Cadastro desconhecido", http.StatusNotFound)
+		return
+	}
 	id, err := strconv.Atoi(request["id"].(string))
 	valores := request["__valores"].(map[string]interface{})
 
@@ -84,6 +93,10 @@ func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
 	log.Printf("%v", request)
 
 	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	if cadastro == nil {
+		http.Error(w, "Cadastro desconhecido", http.StatusNotFound)
+		return
+	}
 	id, err := strconv.Atoi(request["id"].(string))
 
 	if err != nil {
@@ -96,7 +109,11 @@ func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Println(err)
-		http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		if err.Error() == fmt.Sprintf("Document `%d` does not exist", id) {
+			http.Error(w, "Registro não encontrado", http.StatusNotFound)
+		} else {
+			http.Error(w, "Erro ao Buscar", http.StatusBadRequest)
+		}
 		return
 	}
 
@@ -117,6 +134,10 @@ func (server *ApiServer) Deletar(w http.ResponseWriter, r *http.Request) {
 	log.Printf("%v", request)
 
 	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	if cadastro == nil {
+		http.Error(w, "Cadastro desconhecido", http.StatusNotFound)
+		return
+	}
 	id, err := strconv.Atoi(request["id"].(string))
 
 	if err != nil {
@@ -148,6 +169,10 @@ func (server *ApiServer) Listar(w http.ResponseWriter, r *http.Request) {
 	log.Printf("%v", request)
 
 	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	if cadastro == nil {
+		http.Error(w, "Cadastro desconhecido", http.StatusNotFound)
+		return
+	}
 
 	resultados, err := server.Database.Listar(cadastro)
 

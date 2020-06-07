@@ -220,6 +220,32 @@ func TestBuscarCadastro(t *testing.T) {
 	}
 }
 
+func TestBuscarDeveRetornarNotFound(t *testing.T) {
+	server := criarServer()
+	defer testDB.Fechar()
+
+	cadastro := criarCadastros()[0]
+
+	ts := httptest.NewServer(http.HandlerFunc(server.Buscar))
+	defer ts.Close()
+
+	request, _ := json.Marshal(map[string]interface{}{
+		"__cadastro": cadastro.Nome,
+		"id":         "123456",
+	})
+
+	res, err := http.Post(ts.URL, "application/json", bytes.NewBuffer(request))
+	defer res.Body.Close()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if res.StatusCode != 404 {
+		t.Error(fmt.Sprintf("Retornou esse erro: %d", res.StatusCode))
+	}
+}
+
 func TestAlterarCadastro(t *testing.T) {
 	server := criarServer()
 	defer testDB.Fechar()
