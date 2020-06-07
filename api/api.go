@@ -103,6 +103,37 @@ func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(valores)
 }
 
+func (server *ApiServer) Deletar(w http.ResponseWriter, r *http.Request) {
+	var request map[string]interface{}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Deletar", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("%v", request)
+
+	cadastro := server.buscarCadastro(request["__cadastro"].(string))
+	id, err := strconv.Atoi(request["id"].(string))
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Deletar", http.StatusBadRequest)
+		return
+	}
+
+	err = server.Database.Deletar(cadastro, id)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erro ao Deletar", http.StatusBadRequest)
+		return
+	}
+}
+
 func (server *ApiServer) Listar(w http.ResponseWriter, r *http.Request) {
 	var request map[string]interface{}
 
@@ -159,6 +190,7 @@ func InitApi(cadastros []*estrutura.Cadastro, db database.Database) {
 	http.HandleFunc("/api/incluir", server.Incluir)
 	http.HandleFunc("/api/alterar", server.Alterar)
 	http.HandleFunc("/api/listar", server.Listar)
+	http.HandleFunc("/api/deletar", server.Deletar)
 
 	log.Println("Servidor pronto na porta 8080")
 

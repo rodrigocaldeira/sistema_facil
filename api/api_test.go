@@ -266,3 +266,38 @@ func TestAlterarCadastro(t *testing.T) {
 		t.Error(fmt.Sprintf("Olha, algo estranho aconteceu. Isso aqui é o que foi salvo: %v", valoresAlterados))
 	}
 }
+
+func TestDeletarCadastro(t *testing.T) {
+	server := criarServer()
+	defer testDB.Fechar()
+
+	cadastro := criarCadastros()[0]
+
+	valores := map[string]interface{}{
+		"nome":  "Rodrigo Caldeira",
+		"email": "rodrigocaldeira@gmail.com",
+	}
+
+	id, _ := testDB.Incluir(cadastro, valores)
+
+	request, _ := json.Marshal(map[string]interface{}{
+		"__cadastro": cadastro.Nome,
+		"id":         strconv.Itoa(id),
+	})
+
+	ts := httptest.NewServer(http.HandlerFunc(server.Deletar))
+	defer ts.Close()
+
+	res, err := http.Post(ts.URL, "application/json", bytes.NewBuffer(request))
+
+	if err != nil {
+		t.Error(nil)
+	}
+	defer res.Body.Close()
+
+	valoresSalvos, err := testDB.Buscar(cadastro, id)
+
+	if valoresSalvos != nil {
+		t.Error(fmt.Sprintf("Deveria ter apagado o registro, mas buscou isso: %v", valoresSalvos))
+	}
+}
