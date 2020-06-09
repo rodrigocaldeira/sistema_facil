@@ -15,11 +15,17 @@ type ApiServer struct {
 	Database  database.Database
 }
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func (server *ApiServer) GetCadastros(w http.ResponseWriter, _ *http.Request) {
+	enableCors(&w)
 	json.NewEncoder(w).Encode(server.Cadastros)
 }
 
 func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var request map[string]interface{}
 	var valores map[string]interface{}
 
@@ -50,6 +56,7 @@ func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *ApiServer) Alterar(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)
@@ -80,6 +87,7 @@ func (server *ApiServer) Alterar(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)
@@ -121,6 +129,7 @@ func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *ApiServer) Deletar(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)
@@ -156,6 +165,7 @@ func (server *ApiServer) Deletar(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *ApiServer) Listar(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)

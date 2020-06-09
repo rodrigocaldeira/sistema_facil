@@ -1,0 +1,35 @@
+.Menu {
+	min-height: 6vh;
+	display: flex;
+	position: static;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #282c34;
+	flex-direction: row;
+}
+
+.Menu-logo {
+	font-size: 1.4em;
+	color: #fafafa;
+	text-shadow: 1px 1px 5px #0e0e0e;
+	align-self: center;
+	margin-left: 20px;
+}
+
+.Menu-cadastros {
+	align-self: center;
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+}
+
+.Menu-cadastros li {
+	display: inline;
+	color: #fafafa;
+	cursor: pointer;
+	padding-right: 10px;
+}
+
+.Menu-cadastros li:hover {
+	text-decoration: underline;
+}
