@@ -1,17 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Menu from './Menu';
+import axios from 'axios';
 
 class App extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			cadastros: []
+		}
+	}
+
+	componentDidMount() {
+		axios.get('http://localhost:8080/api/cadastros')
+			.then(res => this.setState({ cadastros: res.data }));
+	}
+
 	render() {
 
 		return (
 			<div className="App">
-				<Menu>
+				<Menu cadastros={this.state.cadastros}>
 				</Menu>
-				<header className="App-header">
-				</header>
+				<div className="App-body">
+					<input type="text" />
+				</div>
 			</div>
 		);
 	}
