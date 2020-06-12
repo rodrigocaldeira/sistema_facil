@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import MenuService from './services/MenuService';
+import SistemaFacil from './components/SistemaFacil';
 import * as serviceWorker from './serviceWorker';
 
+let menuService = new MenuService();
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<SistemaFacil menuService={menuService}/>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

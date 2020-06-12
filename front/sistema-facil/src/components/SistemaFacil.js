@@ -1,21 +1,29 @@
 import React from 'react';
-import './App.css';
+import './SistemaFacil.css';
 import Menu from './Menu';
-import axios from 'axios';
 import Campo from './Campo';
 
-class App extends React.Component {
+class SistemaFacil extends React.Component {
 	constructor(props) {
-		super(props)
+		super(props);
+		
+		this.menuService = props.menuService;
+
 		this.state = {
 			cadastros: []
 		}
 	}
 
-	componentDidMount() {
-		axios.get('http://localhost:8080/api/cadastros')
-			.then(res => this.setState({ cadastros: res.data }));
+	cadastroSelecionado(cadastro) {
+		console.log(cadastro);
 	}
+
+	componentDidMount() {
+		this.menuService
+			.BuscarCadastros()
+			.then(cadastros => this.setState({ cadastros: cadastros }));
+	}
+
 
 	render() {
 		const campoNome = {
@@ -32,7 +40,7 @@ class App extends React.Component {
 
 		return (
 			<div className="App">
-				<Menu cadastros={this.state.cadastros}>
+				<Menu cadastros={this.state.cadastros} onCadastroSelecionado={this.cadastroSelecionado}>
 				</Menu>
 				<div className="App-body">
 					<Campo campo={campoNome} />
@@ -44,4 +52,4 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+export default SistemaFacil;
