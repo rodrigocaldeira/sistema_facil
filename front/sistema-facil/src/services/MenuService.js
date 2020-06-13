@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-class MenuService {
-	async BuscarCadastros() {
-		let response = await axios.get('http://localhost:8080/api/cadastros');
-		return response.data ?? [];
-	}
+const buscarCadastros = async () => {
+	let response = await axios.get('http://localhost:8080/api/cadastros');
+	let cadastros = response.data;
+	return cadastros;
 }
 
-export default MenuService;
+export default buscarCadastros;

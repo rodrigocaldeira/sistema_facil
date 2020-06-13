@@ -3,7 +3,7 @@
   min-height: 94vh;
   max-height: 94vh;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #282828;
   display: flex;
   flex-direction: column;
   align-items: center;

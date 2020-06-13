@@ -1,55 +1,49 @@
 import React from 'react';
+import  { ReactReduxContext } from 'react-redux';
 import './SistemaFacil.css';
 import Menu from './Menu';
-import Campo from './Campo';
+import buscarCadastros from '../services/MenuService';
 
 class SistemaFacil extends React.Component {
+	static contextType = ReactReduxContext;
+
 	constructor(props) {
 		super(props);
-		
-		this.menuService = props.menuService;
 
 		this.state = {
-			cadastros: []
-		}
+			cadastros: [],
+			cadastro: {}
+		};
+		console.log(this.contextType)	
+		const store = this.props.store;
+
+		store.subscribe(() => {
+			this.setState({ 
+				cadastros: store.getState().cadastros,
+				cadastro: store.getState().cadastro
+			});
+		});
 	}
 
-	cadastroSelecionado(cadastro) {
-		console.log(cadastro);
-	}
 
 	componentDidMount() {
-		this.menuService
-			.BuscarCadastros()
-			.then(cadastros => this.setState({ cadastros: cadastros }));
+		buscarCadastros()
+			.then(cadastros => {
+				this.props.onInit(cadastros);
+			});
 	}
 
-
 	render() {
-		const campoNome = {
-			nome: "Nome"
-		};
-
-		const campoEmail = {
-			nome: "Email"
-		}
-
-		const campoTelefone = {
-			nome: "Telefone"
-		};
-
 		return (
-			<div className="App">
-				<Menu cadastros={this.state.cadastros} onCadastroSelecionado={this.cadastroSelecionado}>
+			<div className="SistemaFacil">
+				<Menu cadastros={this.state.cadastros}>
 				</Menu>
-				<div className="App-body">
-					<Campo campo={campoNome} />
-					<Campo campo={campoEmail} />
-					<Campo campo={campoTelefone} />
+				<div className="SistemaFacil-body">
+					<h1>{this.state.cadastro.Nome}</h1>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default SistemaFacil;
+export default SistemaFacil

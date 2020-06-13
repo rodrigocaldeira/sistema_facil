@@ -1,40 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import ItemCadastro from '../containers/ItemCadastro';
 import './Menu.css';
+import { propCadastro } from '../proptypes';
 import PropTypes from 'prop-types';
 
-const Menu = ({ cadastros, onCadastroSelecionado }) => (
+const Menu = ({ cadastros }) => (
 	<div className="Menu">
 		<span className="Menu-logo">Sistema Fácil</span>
 
 		<ul className="Menu-cadastros">
-		{cadastros.map(cadastro => <ItemMenu 
+		{cadastros.map(cadastro => <ItemCadastro 
 			key={cadastro.Nome} 
 			cadastro={cadastro} 
-			onClick={() => onCadastroSelecionado(cadastro)}></ItemMenu>) }
+			></ItemCadastro>) }
 		</ul>
 	</div>
 )
 
-const ItemMenu = ({ onClick, cadastro }) => (
-	<li key={cadastro.Nome}	onClick={() => onClick()}>
-		{cadastro.Nome}
-	</li>
-)
-
-const propCampo = PropTypes.shape({
-	Nome: PropTypes.string.isRequired,
-	Tipo: PropTypes.string.isRequired,
-	TaNaLista: PropTypes.bool.isRequired
-}).isRequired;
-
-const propCadastro = PropTypes.shape({
-	Nome: PropTypes.string.isRequired,
-	Campos: PropTypes.arrayOf(propCampo).isRequired
-}).isRequired;
-
-ItemMenu.propTypes = {
-	onClick: PropTypes.func.isRequired,
-	cadastro: propCadastro
+Menu.propTypes = {
+	cadastros: PropTypes.arrayOf(propCadastro).isRequired
 };
 
-export default Menu;
+export default connect()(Menu);
