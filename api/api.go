@@ -17,6 +17,8 @@ type ApiServer struct {
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "*")
+	(*w).Header().Set("Access-Control-Allow-Headers", "*")
 }
 
 func (server *ApiServer) GetCadastros(w http.ResponseWriter, _ *http.Request) {
@@ -26,6 +28,10 @@ func (server *ApiServer) GetCadastros(w http.ResponseWriter, _ *http.Request) {
 
 func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 	var request map[string]interface{}
 	var valores map[string]interface{}
 
@@ -57,6 +63,10 @@ func (server *ApiServer) Incluir(w http.ResponseWriter, r *http.Request) {
 
 func (server *ApiServer) Alterar(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)
@@ -88,6 +98,10 @@ func (server *ApiServer) Alterar(w http.ResponseWriter, r *http.Request) {
 
 func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)
@@ -130,6 +144,10 @@ func (server *ApiServer) Buscar(w http.ResponseWriter, r *http.Request) {
 
 func (server *ApiServer) Deletar(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)
@@ -166,6 +184,11 @@ func (server *ApiServer) Deletar(w http.ResponseWriter, r *http.Request) {
 
 func (server *ApiServer) Listar(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	var request map[string]interface{}
 
 	err := json.NewDecoder(r.Body).Decode(&request)

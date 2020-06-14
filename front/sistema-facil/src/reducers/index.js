@@ -1,4 +1,4 @@
-import { LISTAR_CADASTROS, SELECIONAR_CADASTRO, LISTAR_DADOS, EstadoGeral } from '../actions';
+import { LISTAR_CADASTROS, SELECIONAR_CADASTRO, LISTAR_DADOS, DADOS_LISTADOS, EstadoGeral } from '../actions';
 
 const initialState = {
 	cadastros: [],
@@ -30,7 +30,13 @@ function sistemaFacilApp(state, action) {
 			return {
 				...state,
 				estadoGeral: EstadoGeral.ListandoDados
-			}
+			};
+
+		case DADOS_LISTADOS:
+			return {
+				...state,
+				estadoGeral: EstadoGeral.DadosListados
+			};
 
 		default:
 			return state;

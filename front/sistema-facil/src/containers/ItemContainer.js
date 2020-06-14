@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		onClick: () => {
 			dispatch(selecionarCadastro(ownProps.cadastro));
-			dispatch(listarDados(ownProps.cadastro));
+			dispatch(listarDados());
 		}
 	}
 }

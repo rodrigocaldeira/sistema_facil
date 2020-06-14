@@ -1,6 +1,7 @@
 import React from 'react';
 import './SistemaFacil.css';
 import MenuContainer from '../containers/MenuContainer';
+import TabelaContainer from '../containers/TabelaContainer';
 import buscarCadastros from '../services/MenuService';
 
 class SistemaFacil extends React.Component {
@@ -16,7 +17,7 @@ class SistemaFacil extends React.Component {
 			<div className="SistemaFacil">
 				<MenuContainer />
 				<div className="SistemaFacil-body">
-					<h1>{this.props.cadastro.Nome}</h1>
+					<TabelaContainer />
 				</div>
 			</div>
 		);
