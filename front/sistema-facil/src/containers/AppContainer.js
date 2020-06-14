@@ -9,9 +9,9 @@ const mapStateToProps = (state, ownProps) => {
 	};
 }
 
-const mapDispatchToProps = (dispatch, cadastros) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return { 
-		onInit: (cadastros) => dispatch(listarCadastros(cadastros))
+		onInit: (ownProps) => dispatch(listarCadastros(ownProps.cadastros))
 	};
 }
 

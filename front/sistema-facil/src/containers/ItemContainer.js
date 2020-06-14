@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { selecionarCadastro } from '../actions';
+import { selecionarCadastro, listarDados } from '../actions';
 import ItemMenu from '../components/ItemMenu';
 
 const mapStateToProps = (state, ownProps) => {
@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		onClick: () => {
 			dispatch(selecionarCadastro(ownProps.cadastro));
+			dispatch(listarDados(ownProps.cadastro));
 		}
 	}
 }

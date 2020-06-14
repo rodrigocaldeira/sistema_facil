@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import sistemaFacilApp from './reducers';
 import './index.css';
-import App from './containers/App';
+import AppContainer from './containers/AppContainer';
 
 const store = createStore(sistemaFacilApp);
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App store={store} />
+		<AppContainer />
 	</Provider>,
 	document.getElementById('root')
 );
