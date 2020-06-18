@@ -35,6 +35,7 @@ function sistemaFacilApp(state, action) {
 		case DADOS_LISTADOS:
 			return {
 				...state,
+				lista: action.lista ?? [],
 				estadoGeral: EstadoGeral.DadosListados
 			};
 

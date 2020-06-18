@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { listarCadastros } from '../actions';
+import { dadosListados, listarCadastros } from '../actions';
 import SistemaFacil from '../components/SistemaFacil';
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return { 
-		onInit: (ownProps) => dispatch(listarCadastros(ownProps.cadastros))
+		onInit: (ownProps) => dispatch(listarCadastros(ownProps.cadastros)),
+		onDadosListados: (ownProps) => { dispatch(dadosListados(ownProps.lista)) }
 	};
 }
 
