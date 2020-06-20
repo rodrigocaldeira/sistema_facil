@@ -5,6 +5,7 @@ import TabelaContainer from '../containers/TabelaContainer';
 import buscarCadastros from '../services/MenuService';
 import { listarDados } from '../services/CadastroService';
 import { EstadoGeral } from '../actions';
+import FormularioContainer from '../containers/FormularioContainer';
 
 class SistemaFacil extends React.Component {
 	componentDidMount() {
@@ -15,27 +16,48 @@ class SistemaFacil extends React.Component {
 	}
 
 	render() {
-		let tabelaContainer;
-		if (this.props.estadoGeral === EstadoGeral.ListandoDados) {
-			listarDados(this.props.cadastro)
-				.then(lista => {
-					this.props.onDadosListados({ lista });
-				});
-		} else if (this.props.estadoGeral === EstadoGeral.DadosListados) {
-			tabelaContainer = <TabelaContainer />;
-		} else {
-			tabelaContainer = null;
-		}
-
-
+		this.eventHandler();
+		let telaAtual = this.getTelaAtual();
 		return (
 			<div className="SistemaFacil">
 				<MenuContainer />
 				<div className="SistemaFacil-body">
-				{tabelaContainer}
+					{telaAtual}
 				</div>
 			</div>
 		);
+	}
+
+	eventHandler() {
+		switch (this.props.estadoGeral) {
+			case EstadoGeral.ListandoDados:
+				listarDados(this.props.cadastro)
+					.then(lista => {
+						this.props.onDadosListados({ lista });
+					});
+				break;
+			
+			case EstadoGeral.CadastroIncluido:
+				console.log('CADASTRO INCLUIDO');
+				this.props.onCadastroIncluido();
+				break;
+
+			default: return;
+
+		}
+	}
+
+	getTelaAtual() {
+		switch (this.props.estadoGeral) {
+			case EstadoGeral.DadosListados:
+				return <TabelaContainer />;
+
+			case EstadoGeral.NovoCadastro:
+				return <FormularioContainer />;
+
+			default:
+				return null;
+		}
 	}
 }
 

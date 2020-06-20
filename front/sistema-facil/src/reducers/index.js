@@ -1,4 +1,12 @@
-import { LISTAR_CADASTROS, SELECIONAR_CADASTRO, LISTAR_DADOS, DADOS_LISTADOS, EstadoGeral } from '../actions';
+import { 
+	LISTAR_CADASTROS, 
+	SELECIONAR_CADASTRO, 
+	LISTAR_DADOS, 
+	DADOS_LISTADOS, 
+	NOVO_CADASTRO,
+	CADASTRO_INCLUIDO,
+	EstadoGeral	
+} from '../actions';
 
 const initialState = {
 	cadastros: [],
@@ -38,6 +46,18 @@ function sistemaFacilApp(state, action) {
 				lista: action.lista ?? [],
 				estadoGeral: EstadoGeral.DadosListados
 			};
+
+		case NOVO_CADASTRO:
+			return {
+				...state,
+				estadoGeral: EstadoGeral.NovoCadastro
+			}
+
+		case CADASTRO_INCLUIDO:
+			return {
+				...state,
+				estadoGeral: EstadoGeral.CadastroIncluido
+			}
 
 		default:
 			return state;

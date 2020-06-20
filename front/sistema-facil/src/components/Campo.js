@@ -2,23 +2,24 @@ import React from 'react';
 import './Campo.css';
 
 class Campo extends React.Component {
-	
+
 	constructor(props) {
 		super(props);
 
-		const campo = props.campo;
+		this.campo = props.campo;
 
 		this.state = {
-			active: campo.active || false,
-			valor: campo.valor || "",
-			erro: campo.erro || "",
-			nome: campo.nome || "(Campo)"
+			active: this.campo.active || false,
+			valor: this.campo.valor || "",
+			erro: this.campo.erro || "",
+			nome: this.campo.nome || "(Campo)"
 		};
 	}
 
 	mudarValor(event) {
 		const valor = event.target.value;
 		this.setState({valor, erro: ""});
+		this.campo.valor = valor;
 	}
 	
 	render() {
@@ -35,6 +36,7 @@ class Campo extends React.Component {
 					onChange={this.mudarValor.bind(this)}
 					onFocus={() => this.setState({active: true})}
 					onBlur={() => this.setState({active: false})}
+					autoComplete="off"
 				/>
 				<label htmlFor={1} className={erro && "error"}>
 					{erro || nome}

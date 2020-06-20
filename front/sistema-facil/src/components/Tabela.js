@@ -1,12 +1,20 @@
 import React from 'react';
-import { EstadoGeral } from '../actions';
+import { EstadoGeral, NOVO_CADASTRO } from '../actions';
 import { useTable, usePagination } from 'react-table';
+import { useSelector, useDispatch } from 'react-redux';
 import './Tabela.css';
 
-function Tabela({ cadastro, estadoGeral, lista  }) {
+function Tabela() {
+
+	let cadastro = useSelector(state => state.cadastro);
+	let estadoGeral = useSelector(state => state.estadoGeral);
+	let lista  = useSelector(state => state.lista);
+
 	let columns = cadastro.Campos.map(campo => {
 		return { Header: campo.Nome, accessor: campo.Nome.toLowerCase() }; 
 	});
+
+	const dispatch = useDispatch();
 	
 	const {
 		getTableProps,
@@ -29,6 +37,7 @@ function Tabela({ cadastro, estadoGeral, lista  }) {
 		return (
 			<div>
 				<h2>{cadastro.Nome}</h2>
+				<button onClick={() => dispatch({ type: NOVO_CADASTRO })}>Incluir</button>
 
 				<table {...getTableProps}>
 					<thead>
