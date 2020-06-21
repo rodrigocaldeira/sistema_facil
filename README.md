@@ -116,6 +116,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [ ] Lista com única seleção
   - [ ] Lista com múltipla seleção
   - [ ] Lista de outro Cadastro existente
+  - [ ] Senha
 - [ ] Regras de validação de Campos
 - [ ] Modal com confirmação de exclusão de um cadastro (exclusões são, no momento, Hard Delete)
 - [ ] Toasts com confirmação de ações executadas (inclusão e edição de um cadastro)
