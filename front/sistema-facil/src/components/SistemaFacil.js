@@ -3,7 +3,7 @@ import './SistemaFacil.css';
 import MenuContainer from '../containers/MenuContainer';
 import TabelaContainer from '../containers/TabelaContainer';
 import buscarCadastros from '../services/MenuService';
-import { listarDados } from '../services/CadastroService';
+import { listarDados, buscarCadastro, excluirCadastro } from '../services/CadastroService';
 import { EstadoGeral } from '../actions';
 import FormularioContainer from '../containers/FormularioContainer';
 
@@ -38,9 +38,23 @@ class SistemaFacil extends React.Component {
 				break;
 			
 			case EstadoGeral.CadastroIncluido:
-				console.log('CADASTRO INCLUIDO');
 				this.props.onCadastroIncluido();
 				break;
+
+			case EstadoGeral.CadastroEditado:
+				this.props.onCadastroEditado();
+				break;
+
+			case EstadoGeral.BuscandoCadastro:
+				buscarCadastro(this.props.cadastro, this.props.id)
+					.then(dados => {
+						this.props.onDadosBuscados({ dados });	
+					});
+				break;
+
+			case EstadoGeral.ExcluindoCadastro:
+				excluirCadastro(this.props.cadastro, this.props.id)
+					.then(() => this.props.onCadastroExcluido());
 
 			default: return;
 
@@ -53,6 +67,7 @@ class SistemaFacil extends React.Component {
 				return <TabelaContainer />;
 
 			case EstadoGeral.NovoCadastro:
+			case EstadoGeral.EditandoCadastro:
 				return <FormularioContainer />;
 
 			default:

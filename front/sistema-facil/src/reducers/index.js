@@ -5,6 +5,10 @@ import {
 	DADOS_LISTADOS, 
 	NOVO_CADASTRO,
 	CADASTRO_INCLUIDO,
+	BUSCANDO_CADASTRO,
+	EDITANDO_CADASTRO,
+	CADASTRO_EDITADO,
+	EXCLUINDO_CADASTRO,
 	EstadoGeral	
 } from '../actions';
 
@@ -44,6 +48,8 @@ function sistemaFacilApp(state, action) {
 			return {
 				...state,
 				lista: action.lista ?? [],
+				id: undefined,
+				dados: undefined,
 				estadoGeral: EstadoGeral.DadosListados
 			};
 
@@ -57,6 +63,33 @@ function sistemaFacilApp(state, action) {
 			return {
 				...state,
 				estadoGeral: EstadoGeral.CadastroIncluido
+			}
+
+		case BUSCANDO_CADASTRO:
+			return {
+				...state,
+				id: action.id,
+				estadoGeral: EstadoGeral.BuscandoCadastro
+			}
+
+		case EDITANDO_CADASTRO:
+			return {
+				...state,
+				dados: action.dados,
+				estadoGeral: EstadoGeral.EditandoCadastro
+			}
+
+		case CADASTRO_EDITADO:
+			return {
+				...state,
+				estadoGeral: EstadoGeral.CadastroEditado
+			}
+
+		case EXCLUINDO_CADASTRO:
+			return {
+				...state,
+				id: action.id,
+				estadoGeral: EstadoGeral.ExcluindoCadastro
 			}
 
 		default:

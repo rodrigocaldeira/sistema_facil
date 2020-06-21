@@ -1,5 +1,10 @@
 import React from 'react';
-import { EstadoGeral, NOVO_CADASTRO } from '../actions';
+import { 
+	EstadoGeral, 
+	NOVO_CADASTRO,
+	BUSCANDO_CADASTRO,
+	EXCLUINDO_CADASTRO
+} from '../actions';
 import { useTable, usePagination } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import './Tabela.css';
@@ -46,6 +51,7 @@ function Tabela() {
 							{headerGroup.headers.map(column => (
 								<th {...column.getHeaderProps()}>{column.render('Header')}</th>
 							))}
+							<th>&nbsp;</th>
 						</tr>
 						))}
 					</thead>
@@ -57,6 +63,20 @@ function Tabela() {
 									{row.cells.map(cell => {
 										return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
 									})}
+									<td>
+										<button 
+											type="button"
+											onClick={() => dispatch({ type: BUSCANDO_CADASTRO, id: row.original.id})}>
+											Editar
+											</button>
+										
+										<button 
+											type="button"
+											onClick={() => dispatch({ type: EXCLUINDO_CADASTRO, id: row.original.id})}>
+											Excluir
+											</button>
+
+									</td>
 								</tr>
 							)
 						})}
