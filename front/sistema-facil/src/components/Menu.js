@@ -4,14 +4,16 @@ import './Menu.css';
 
 const Menu = ({ cadastros }) => (
 	<div className="Menu">
-		<span className="Menu-logo">Sistema Fácil</span>
+		<div className="Menu-Content">
+			<span className="Menu-logo">Sistema Fácil</span>
 
-		<ul className="Menu-cadastros">
-		{cadastros.map(cadastro => <ItemContainer 
-			key={cadastro.Nome} 
-			cadastro={cadastro}
-			></ItemContainer>) }
-		</ul>
+			<ul className="Menu-cadastros">
+			{cadastros.map(cadastro => <ItemContainer 
+				key={cadastro.Nome} 
+				cadastro={cadastro}
+				></ItemContainer>) }
+			</ul>
+		</div>
 	</div>
 )
 

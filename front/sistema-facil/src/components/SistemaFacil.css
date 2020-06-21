@@ -1,12 +1,47 @@
 .SistemaFacil-body {
-  background-color: #e0e0e0;
-  min-height: 94vh;
-  max-height: 94vh;
-  font-size: calc(10px + 2vmin);
-  color: #282828;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: flex-start;
+	background-color: #282c34;
+	min-height: 94vh;
+	max-height: 94vh;
+	font-size: 1.3rem;
+	color: #fafafa;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: flex-start;
 }
 
+button {
+	cursor: pointer;
+	border: none;
+	padding: 5px;
+	padding-right: 6px;
+	padding-left: 6px;
+	margin: 2px;
+	background-color: #aaa;
+	color: #fafafa;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 0.9rem;
+	border-radius: 3px 3px;
+	border: 1px solid #494949;
+	opacity: 0.8;
+}
+
+button:hover {
+	opacity: 1;
+}
+
+button.btn-info {
+	background-color: #3268a8;
+}
+
+button.btn-danger {
+	background-color: #a83232;
+}
+
+button.btn-success {
+	background-color: #32a863;
+}

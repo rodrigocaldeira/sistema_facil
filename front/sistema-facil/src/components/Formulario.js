@@ -8,6 +8,7 @@ import {
 	EstadoGeral
 } from '../actions';
 import { incluirCadastro, editarCadastro } from '../services/CadastroService';
+import './Formulario.css';
 
 function Formulario() {
 	
@@ -41,16 +42,19 @@ function Formulario() {
 
 	
 	return (
-		<form onSubmit={salvar}>
-			{campos.map(campo => {
-				return <Campo key={campo.nome} campo={campo} />
-			})}
-			<button type="button" onClick={(event) => {
-				event.preventDefault();
-				dispatch({ type: DADOS_LISTADOS, lista });
-			}}>Cancelar</button>
-			<button type="submit">Salvar</button>
-		</form>
+		<div className="Formulario">
+			<h2>{cadastro.Nome}</h2>
+			<form onSubmit={salvar}>
+				{campos.map(campo => {
+					return <Campo key={campo.nome} campo={campo} />
+				})}
+				<button className="btn-danger" type="button" onClick={(event) => {
+					event.preventDefault();
+					dispatch({ type: DADOS_LISTADOS, lista });
+				}}>Cancelar</button>
+				<button className="btn-success" type="submit">Salvar</button>
+			</form>
+		</div>
 	)
 }
 

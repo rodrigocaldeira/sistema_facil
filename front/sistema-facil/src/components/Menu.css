@@ -1,4 +1,11 @@
 .Menu {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #282c34;
+}
+
+.Menu-Content {
 	min-height: 6vh;
 	display: flex;
 	position: static;
@@ -6,6 +13,7 @@
 	justify-content: space-between;
 	background-color: #282c34;
 	flex-direction: row;
+	width: 70vw;
 }
 
 .Menu-logo {
@@ -13,7 +21,6 @@
 	color: #fafafa;
 	text-shadow: 1px 1px 5px #0e0e0e;
 	align-self: center;
-	margin-left: 20px;
 }
 
 .Menu-cadastros {
@@ -27,7 +34,7 @@
 	display: inline;
 	color: #fafafa;
 	cursor: pointer;
-	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .Menu-cadastros li:hover {

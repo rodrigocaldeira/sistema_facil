@@ -42,7 +42,7 @@ function Tabela() {
 		return (
 			<div>
 				<h2>{cadastro.Nome}</h2>
-				<button onClick={() => dispatch({ type: NOVO_CADASTRO })}>Incluir</button>
+				<button onClick={() => dispatch({ type: NOVO_CADASTRO })} className="btn-info">Incluir</button>
 
 				<table {...getTableProps}>
 					<thead>
@@ -63,14 +63,14 @@ function Tabela() {
 									{row.cells.map(cell => {
 										return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
 									})}
-									<td>
-										<button 
+									<td className="Acoes">
+										<button className="btn-info" 
 											type="button"
 											onClick={() => dispatch({ type: BUSCANDO_CADASTRO, id: row.original.id})}>
 											Editar
 											</button>
 										
-										<button 
+										<button className="btn-danger"
 											type="button"
 											onClick={() => dispatch({ type: EXCLUINDO_CADASTRO, id: row.original.id})}>
 											Excluir
