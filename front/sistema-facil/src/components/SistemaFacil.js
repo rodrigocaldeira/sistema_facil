@@ -6,6 +6,8 @@ import buscarCadastros from '../services/MenuService';
 import { listarDados, buscarCadastro, excluirCadastro } from '../services/CadastroService';
 import { EstadoGeral } from '../actions';
 import FormularioContainer from '../containers/FormularioContainer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class SistemaFacil extends React.Component {
 	componentDidMount() {
@@ -24,6 +26,7 @@ class SistemaFacil extends React.Component {
 				<div className="SistemaFacil-body">
 					{telaAtual}
 				</div>
+				<ToastContainer />
 			</div>
 		);
 	}
@@ -39,10 +42,12 @@ class SistemaFacil extends React.Component {
 			
 			case EstadoGeral.CadastroIncluido:
 				this.props.onCadastroIncluido();
+				toast.success("Cadastro incluído com sucesso!");
 				break;
 
 			case EstadoGeral.CadastroEditado:
 				this.props.onCadastroEditado();
+				toast.success("Cadastro editado com sucesso!");
 				break;
 
 			case EstadoGeral.BuscandoCadastro:
@@ -54,7 +59,11 @@ class SistemaFacil extends React.Component {
 
 			case EstadoGeral.ExcluindoCadastro:
 				excluirCadastro(this.props.cadastro, this.props.id)
-					.then(() => this.props.onCadastroExcluido());
+					.then(() => {
+						toast.success("Cadastro excluído com sucesso!");
+						this.props.onCadastroExcluido();
+					});
+				break;
 
 			default: return;
 
