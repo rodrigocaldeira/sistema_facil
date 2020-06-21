@@ -8,6 +8,8 @@ import {
 import { useTable, usePagination } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import './Tabela.css';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 function Tabela() {
 
@@ -37,6 +39,22 @@ function Tabela() {
 		setPageSize,
 		state: { pageIndex, pageSize },
 	} = useTable({ columns, data: lista, initialState: { pageIndex: 0 } }, usePagination);
+
+	let excluir = (id) => {
+		confirmAlert({
+			title: 'Exclusão de cadastro',
+			message: 'Deseja realmente excluir este cadastro?',
+			buttons: [
+				{
+					label: 'Sim',
+					onClick: () => dispatch({ type: EXCLUINDO_CADASTRO, id })
+				},
+				{
+					label: 'Não'
+				}
+			]
+		});
+	}
 
 	if (estadoGeral === EstadoGeral.DadosListados) {
 		return (
@@ -72,7 +90,7 @@ function Tabela() {
 										
 										<button className="btn-danger"
 											type="button"
-											onClick={() => dispatch({ type: EXCLUINDO_CADASTRO, id: row.original.id})}>
+											onClick={() => excluir(row.original.id)}>
 											Excluir
 											</button>
 
