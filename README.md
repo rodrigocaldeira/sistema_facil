@@ -117,6 +117,8 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [ ] Lista com múltipla seleção
   - [ ] Lista de outro Cadastro existente
   - [ ] Senha
+  - [ ] Data
+  - [ ] Data e Hora
 - [ ] Possibilidade de campos opcionais 
 - [x] Modal com confirmação de exclusão de um cadastro (exclusões são, no momento, Hard Delete)
 - [x] Toasts com confirmação de ações executadas (inclusão e edição de um cadastro)
