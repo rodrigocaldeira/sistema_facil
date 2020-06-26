@@ -1,6 +1,6 @@
 Campos
 	Nome, Texto
-	Email, Texto
+	Email, Email
 	Telefone, Texto
 
 Lista

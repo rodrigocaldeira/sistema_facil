@@ -105,7 +105,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
 - [x] Criação do frontend com as operações básicas
 - [ ] Criação dos tipos de campos
   - [x] Texto
-  - [ ] Email
+  - [x] Email
   - [ ] Telefone
   - [ ] Número Inteiro
   - [ ] Número Decimal
@@ -117,7 +117,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [ ] Lista com múltipla seleção
   - [ ] Lista de outro Cadastro existente
   - [ ] Senha
-- [ ] Regras de validação de Campos
+- [ ] Possibilidade de campos opcionais 
 - [x] Modal com confirmação de exclusão de um cadastro (exclusões são, no momento, Hard Delete)
 - [x] Toasts com confirmação de ações executadas (inclusão e edição de um cadastro)
 - [ ] Regras de workflow

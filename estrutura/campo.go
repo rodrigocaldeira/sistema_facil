@@ -6,6 +6,7 @@ import (
 
 var tiposValidos []string = []string{
 	"Texto",
+	"Email",
 }
 
 type Campo struct {

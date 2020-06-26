@@ -1,18 +1,27 @@
 table {
 	border-spacing: 0;
 	min-width: 70vw;
+	border: 5px solid #bbb;
+	border-radius: 4px 4px;
+	background-color: #fafafa;
+	color: #090909;
 }
 
 tr {
 	cursor: default;
 }
 
+thead {
+	background-color: #555;
+	color: #bbb;
+}
+
 tbody tr:hover {
-	background-color: #555!important;
+	background-color: #aaa!important;
 }
 
 tr:nth-child(even) {
-	background-color: #39393f;
+	background-color: #dadada;
 }
 
 td {

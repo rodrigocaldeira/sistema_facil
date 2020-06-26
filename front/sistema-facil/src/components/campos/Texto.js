@@ -1,25 +1,13 @@
 import React from 'react';
-import './Campo.css';
+import Campo from './Campo';
+import CampoVazio from './validadores/CampoVazio';
 
-class Campo extends React.Component {
+class Texto extends Campo  {
 
 	constructor(props) {
 		super(props);
 
-		this.campo = props.campo;
-
-		this.state = {
-			active: this.campo.active || false,
-			valor: this.campo.valor || "",
-			erro: this.campo.erro || "",
-			nome: this.campo.nome || "(Campo)"
-		};
-	}
-
-	mudarValor(event) {
-		const valor = event.target.value;
-		this.setState({valor, erro: ""});
-		this.campo.valor = valor;
+		this.validadores.push(new CampoVazio());
 	}
 	
 	render() {
@@ -35,7 +23,11 @@ class Campo extends React.Component {
 					placeholder={nome}
 					onChange={this.mudarValor.bind(this)}
 					onFocus={() => this.setState({active: true})}
-					onBlur={() => this.setState({active: false})}
+					onBlur={() => {
+						if (!erro) {
+							this.setState({active: false});
+						}
+					}}
 					autoComplete="off"
 				/>
 				<label htmlFor={1} className={erro && "error"}>
@@ -46,4 +38,4 @@ class Campo extends React.Component {
 	}
 }
 
-export default Campo;
+export default Texto;
