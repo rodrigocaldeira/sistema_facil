@@ -1,4 +1,3 @@
-import React from 'react';
 import Texto from './Texto';
 import EmailInvalido from './validadores/EmailInvalido';
 

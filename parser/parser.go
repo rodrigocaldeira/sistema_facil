@@ -98,18 +98,23 @@ func lerCampo(linha string) (*estrutura.Campo, error) {
 
 	definicaoDoCampo := strings.Split(linha, ",")
 
-	if len(definicaoDoCampo) != 2 {
+	if len(definicaoDoCampo) < 2 {
 		return nil, errors.New("Arquivo com campo mal formatado")
 	}
 
 	nome := strings.TrimSpace(definicaoDoCampo[0])
 	tipo := strings.TrimSpace(definicaoDoCampo[1])
+	opcoes := make([]string, 0)
 
 	if tipo == "" {
 		return nil, errors.New("Arquivo com campo mal formatado")
 	}
 
-	campo, err := estrutura.NewCampo(nome, tipo)
+	if len(definicaoDoCampo) >= 2 {
+		opcoes = definicaoDoCampo[2:]
+	}
+
+	campo, err := estrutura.NewCampo(nome, tipo, opcoes...)
 
 	if err != nil {
 		return nil, err

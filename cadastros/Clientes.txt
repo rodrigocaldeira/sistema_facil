@@ -2,4 +2,4 @@ Campos
 	Nome, Texto
 	Email, Texto
 Lista
-	Nome, Email
+	Nome

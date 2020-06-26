@@ -17,7 +17,10 @@ function Tabela() {
 	let estadoGeral = useSelector(state => state.estadoGeral);
 	let lista  = useSelector(state => state.lista);
 
-	let columns = cadastro.Campos.map(campo => {
+	let columns = cadastro
+		.Campos
+		.filter(campo => campo.TaNaLista)
+		.map(campo => {
 		return { Header: campo.Nome, accessor: campo.Nome.toLowerCase() }; 
 	});
 

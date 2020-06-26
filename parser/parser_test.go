@@ -41,6 +41,11 @@ Lista
 	Nome, Email
 `
 
+var arquivoComCampoOpcional = `
+Campos
+	Nome, Texto, Opcional
+`
+
 var arquivoComTagDeListaMasSemLista string = `
 Lista
 `
@@ -161,5 +166,17 @@ func TestArquivoComCampoComTipoInvalido(t *testing.T) {
 
 	if err.Error() != "Tipo inválido" {
 		t.Error(fmt.Sprintf("Deveria ter dado erro de campo com tipo inválido, mas deu outro erro: %s", err))
+	}
+}
+
+func TestArquivoComCampoOpcional(t *testing.T) {
+	campos, err := LerCampos(arquivoComCampoOpcional)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !campos[0].Opcional {
+		t.Error("O campo deveria ser opcional")
 	}
 }

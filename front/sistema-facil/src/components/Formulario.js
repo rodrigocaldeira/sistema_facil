@@ -28,7 +28,7 @@ function Formulario() {
 			valor = dados[campo.Nome.toLowerCase()];
 		}
 
-		let props =  { nome: campo.Nome, tipo: campo.Tipo, valor };
+		let props =  { nome: campo.Nome, tipo: campo.Tipo, valor, opcional: campo.Opcional };
 
 		let campoRef = React.createRef();
 		camposRef[props.nome] = campoRef;
