@@ -4,7 +4,7 @@ import {
 	BUSCANDO_CADASTRO,
 	EXCLUINDO_CADASTRO
 } from '../actions';
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useSortBy } from 'react-table';
 import { useDispatch } from 'react-redux';
 import './Tabela.css';
 import { confirmAlert } from 'react-confirm-alert';
@@ -33,7 +33,11 @@ function Tabela({ cadastro, lista }) {
 		nextPage,
 		previousPage,
 		state: { pageIndex },
-	} = useTable({ columns, data: lista }, usePagination);
+	} = useTable(
+		{ columns, data: lista }, 
+		useSortBy,
+		usePagination
+	);
 
 	let excluir = (id) => {
 		confirmAlert({
@@ -84,7 +88,7 @@ function Tabela({ cadastro, lista }) {
 			);
 		} else return null;
 	}
-
+	
 	return (
 		<div>
 			<h2>{cadastro.Nome}</h2>
@@ -95,7 +99,16 @@ function Tabela({ cadastro, lista }) {
 				{headerGroups.map(headerGroup => (
 					<tr {...headerGroup.getHeaderGroupProps()}>
 					{headerGroup.headers.map(column => (
-						<th {...column.getHeaderProps()}>{column.render('Header')}</th>
+						<th {...column.getHeaderProps(column.getSortByToggleProps())}>
+							{column.render('Header')}
+							<span>
+								{column.isSorted
+									? column.isSortedDesc
+										? ' \u2191'
+										: ' \u2193'
+									: ''}
+							</span>
+						</th>
 					))}
 					<th>&nbsp;</th>
 					</tr>
