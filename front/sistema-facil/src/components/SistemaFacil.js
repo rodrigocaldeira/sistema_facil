@@ -1,7 +1,7 @@
 import React from 'react';
 import './SistemaFacil.css';
 import MenuContainer from '../containers/MenuContainer';
-import TabelaContainer from '../containers/TabelaContainer';
+import Tabela from './Tabela';
 import buscarCadastros from '../services/MenuService';
 import { listarDados, buscarCadastro, excluirCadastro } from '../services/CadastroService';
 import { EstadoGeral } from '../actions';
@@ -73,7 +73,7 @@ class SistemaFacil extends React.Component {
 	getTelaAtual() {
 		switch (this.props.estadoGeral) {
 			case EstadoGeral.DadosListados:
-				return <TabelaContainer />;
+				return <Tabela cadastro={this.props.cadastro} lista={this.props.lista} />;
 
 			case EstadoGeral.NovoCadastro:
 			case EstadoGeral.EditandoCadastro:

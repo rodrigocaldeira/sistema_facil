@@ -1,28 +1,22 @@
 import React from 'react';
 import { 
-	EstadoGeral, 
 	NOVO_CADASTRO,
 	BUSCANDO_CADASTRO,
 	EXCLUINDO_CADASTRO
 } from '../actions';
 import { useTable, usePagination } from 'react-table';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './Tabela.css';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-function Tabela() {
-
-	let cadastro = useSelector(state => state.cadastro);
-	let estadoGeral = useSelector(state => state.estadoGeral);
-	let lista  = useSelector(state => state.lista);
-
-	let columns = cadastro
+function Tabela({ cadastro, lista }) {
+	let columns = React.useMemo(() => cadastro
 		.Campos
 		.filter(campo => campo.TaNaLista)
 		.map(campo => {
-		return { Header: campo.Nome, accessor: campo.Nome.toLowerCase() }; 
-	});
+			return { Header: campo.Nome, accessor: campo.Nome.toLowerCase() };
+		}), [cadastro.Campos]);
 
 	const dispatch = useDispatch();
 	
@@ -34,14 +28,12 @@ function Tabela() {
 		page,
 		canPreviousPage,
 		canNextPage,
-		pageOptions,
 		pageCount,
 		gotoPage,
 		nextPage,
 		previousPage,
-		setPageSize,
-		state: { pageIndex, pageSize },
-	} = useTable({ columns, data: lista, initialState: { pageIndex: 0 } }, usePagination);
+		state: { pageIndex },
+	} = useTable({ columns, data: lista }, usePagination);
 
 	let excluir = (id) => {
 		confirmAlert({
@@ -59,53 +51,86 @@ function Tabela() {
 		});
 	}
 
-	if (estadoGeral === EstadoGeral.DadosListados) {
-		return (
-			<div>
-				<h2>{cadastro.Nome}</h2>
-				<button onClick={() => dispatch({ type: NOVO_CADASTRO })} className="btn-info">Incluir</button>
+	const paginacao = () => {
+		if (pageCount > 1) {
+			return (
+			<tfoot>
+				<tr>
+					<td colSpan={columns.length + 1}>
+						<button disabled={!canPreviousPage}
+							type="button"
+							onClick={() => gotoPage(0)}>
+							Primeira página
+						</button>
+						<button disabled={!canPreviousPage}
+							type="button"
+							onClick={() => previousPage()}>
+							Anterior
+						</button>
+						<button disabled={!canNextPage}
+							type="button"
+							onClick={() => nextPage()}>
+							Próxima	
+						</button>
+						<button disabled={!canNextPage}
+							type="button"
+							onClick={() => gotoPage(pageCount - 1)}>
+							Última página	
+						</button>
+					</td>
+				</tr>
+			</tfoot>
 
-				<table {...getTableProps}>
-					<thead>
-						{headerGroups.map(headerGroup => (
-						<tr {...headerGroup.getHeaderGroupProps()}>
-							{headerGroup.headers.map(column => (
-								<th {...column.getHeaderProps()}>{column.render('Header')}</th>
-							))}
-							<th>&nbsp;</th>
+			);
+		} else return null;
+	}
+
+	return (
+		<div>
+			<h2>{cadastro.Nome}</h2>
+			<button onClick={() => dispatch({ type: NOVO_CADASTRO })} className="btn-info">Incluir</button>
+
+			<table {...getTableProps}>
+			<thead>
+				{headerGroups.map(headerGroup => (
+					<tr {...headerGroup.getHeaderGroupProps()}>
+					{headerGroup.headers.map(column => (
+						<th {...column.getHeaderProps()}>{column.render('Header')}</th>
+					))}
+					<th>&nbsp;</th>
+					</tr>
+				))}
+			</thead>
+			<tbody {...getTableBodyProps()}>
+				{page.map((row, i) => {
+					prepareRow(row)
+					return(
+						<tr {...row.getRowProps()}>
+							{row.cells.map(cell => {
+								return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+							})}
+							<td className="Acoes">
+								<button className="btn-info" 
+									type="button"
+									onClick={() => dispatch({ type: BUSCANDO_CADASTRO, id: row.original.id})}>
+									Editar
+								</button>
+
+								<button className="btn-danger"
+									type="button"
+									onClick={() => excluir(row.original.id)}>
+									Excluir
+								</button>
+
+							</td>
 						</tr>
-						))}
-					</thead>
-					<tbody {...getTableBodyProps()} >
-						{page.map((row, i) => {
-						prepareRow(row)
-							return(
-								<tr {...row.getRowProps()}>
-									{row.cells.map(cell => {
-										return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-									})}
-									<td className="Acoes">
-										<button className="btn-info" 
-											type="button"
-											onClick={() => dispatch({ type: BUSCANDO_CADASTRO, id: row.original.id})}>
-											Editar
-											</button>
-										
-										<button className="btn-danger"
-											type="button"
-											onClick={() => excluir(row.original.id)}>
-											Excluir
-											</button>
-
-									</td>
-								</tr>
-							)
-						})}
-					</tbody>
-				</table>
-			</div>
-		)
-	} else return null;
+					)
+				})}
+			</tbody>
+			{paginacao()}
+			</table>
+		</div>
+	)
 }
 
 export default Tabela;

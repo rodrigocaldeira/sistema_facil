@@ -45,3 +45,8 @@ button.btn-danger {
 button.btn-success {
 	background-color: #32a863;
 }
+
+button[disabled] {
+	opacity: 0.5;
+	cursor: default;
+}

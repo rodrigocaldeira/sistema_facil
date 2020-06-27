@@ -28,6 +28,10 @@ td {
 	padding: 6px;
 }
 
+tfoot td {
+	text-align: center;
+}
+
 .Acoes {
 	text-align: right;
 }
