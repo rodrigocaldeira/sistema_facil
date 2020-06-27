@@ -8,6 +8,7 @@ class Email extends Texto  {
 		
 		this.validadores.push(new EmailInvalido());
 	}
+
 }
 
 export default Email;

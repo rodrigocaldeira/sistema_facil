@@ -8,6 +8,7 @@ import (
 var tiposValidos []string = []string{
 	"Texto",
 	"Email",
+	"Telefone",
 }
 
 type Campo struct {

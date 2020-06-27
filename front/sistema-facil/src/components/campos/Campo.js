@@ -5,31 +5,33 @@ class Campo extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-		this.campo = props.campo;
-
+		
 		this.state = {
-			active: this.campo.active || false,
-			valor: this.campo.valor || "",
-			erro: this.campo.erro || "",
-			nome: this.campo.nome || "(Campo)",
-			opcional: false
+			active: false,
+			erro: "",
+			valor: this.props.campo.valor ?? "",
+			nome: this.props.campo.nome,
+			tipo: this.props.campo.tipo
 		};
-
+		
 		this.validadores = [];
 	}
 
-	mudarValor(event) {
-		const valor = event.target.value;
-		this.setState({valor, erro: ""});
-		this.campo.valor = valor;
+	id() {
+		return "__id__" + this.state.nome.toLowerCase().replace(" ", "_");
 	}
+
+	definirValor(valor) {
+		this.setState({ valor, erro: "" });
+		this.props.campo.valor = valor;
+	}
+
 
 	validar() {
 		let valido = true;
 		
 		this.validadores.forEach(validador => {
-			let erro = validador.validar(this.campo);
+			let erro = validador.validar(this.state);
 
 			if (erro !== "") {
 				this.setState({ erro, active: true });

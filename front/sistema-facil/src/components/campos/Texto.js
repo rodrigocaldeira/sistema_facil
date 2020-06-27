@@ -6,8 +6,24 @@ class Texto extends Campo  {
 
 	constructor(props) {
 		super(props);
+		
 
 		this.validadores.push(new CampoVazio());
+	}
+
+	blur(event) {
+		const { erro } = this.state;
+
+		if (!erro) {
+			this.setState({ active: false });
+		}
+	}
+
+	keyup(event) {}
+	keydown(event) {}
+	
+	change(event) {
+		this.definirValor(event.target.value);
 	}
 	
 	render() {
@@ -17,20 +33,18 @@ class Texto extends Campo  {
 		return (
 			<div className={className}>
 				<input
-					id={1}
+					id={this.id()}
 					type="text"
 					value={valor}
 					placeholder={nome}
-					onChange={this.mudarValor.bind(this)}
-					onFocus={() => this.setState({active: true})}
-					onBlur={() => {
-						if (!erro) {
-							this.setState({active: false});
-						}
-					}}
+					onChange={this.change.bind(this)}
+					onFocus={() => this.setState({ active: true})}
+					onBlur={this.blur.bind(this)}
+					onKeyUp={this.keyup.bind(this)}
+					onKeyDown={this.keydown.bind(this)}
 					autoComplete="off"
 				/>
-				<label htmlFor={1} className={erro && "error"}>
+				<label htmlFor={this.id()} className={erro && "error"}>
 					{erro || nome}
 				</label>
 			</div>

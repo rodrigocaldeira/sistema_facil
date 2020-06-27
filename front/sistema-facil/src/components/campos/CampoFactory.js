@@ -1,13 +1,15 @@
 import Texto from './Texto';
 import Email from './Email';
+import Telefone from './Telefone';
+
+const tiposDeCampo = {
+	Email: Email,
+	Telefone: Telefone
+}
 
 export default function criarCampo(tipo) {
-	switch (tipo) {
-		case "Texto":
-			return Texto;
-		case "Email":
-			return Email;
-		default:
-			return Texto;
+	if (tipo in tiposDeCampo) {
+		return tiposDeCampo[tipo];
 	}
+	return Texto;
 }

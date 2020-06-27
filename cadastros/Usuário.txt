@@ -1,7 +1,7 @@
 Campos
 	Nome, Texto
 	Email, Email
-	Telefone, Texto, Opcional
+	Telefone, Telefone, Opcional
 
 Lista
 	Nome, Telefone, Email 
