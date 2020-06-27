@@ -106,7 +106,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
 - [ ] Criação dos tipos de campos
   - [x] Texto
   - [x] Email
-  - [ ] Telefone
+  - [x] Telefone
   - [ ] Número Inteiro
   - [ ] Número Decimal
   - [ ] Moeda
