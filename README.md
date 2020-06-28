@@ -108,7 +108,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [x] Email
   - [x] Telefone
   - [x] Número Inteiro
-  - [ ] Número Decimal
+  - [x] Número Decimal (separador de decimal é ponto por enquanto)
   - [ ] Moeda
   - [ ] CPF
   - [ ] CNPJ
