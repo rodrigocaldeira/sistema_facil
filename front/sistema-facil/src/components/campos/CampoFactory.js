@@ -1,10 +1,12 @@
 import Texto from './Texto';
 import Email from './Email';
 import Telefone from './Telefone';
+import Numero from './Numero';
 
 const tiposDeCampo = {
 	Email: Email,
-	Telefone: Telefone
+	Telefone: Telefone,
+	Número: Numero
 }
 
 export default function criarCampo(tipo) {

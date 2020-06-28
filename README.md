@@ -107,7 +107,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [x] Texto
   - [x] Email
   - [x] Telefone
-  - [ ] Número Inteiro
+  - [x] Número Inteiro
   - [ ] Número Decimal
   - [ ] Moeda
   - [ ] CPF

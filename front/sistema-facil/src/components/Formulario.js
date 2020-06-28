@@ -66,11 +66,13 @@ function Formulario() {
 			<h2>{cadastro.Nome}</h2>
 			<form onSubmit={salvar}>
 				{campos}
-				<button className="btn-danger" type="button" onClick={(event) => {
-					event.preventDefault();
-					dispatch({ type: DADOS_LISTADOS, lista });
-				}}>Cancelar</button>
-				<button className="btn-success" type="submit">Salvar</button>
+				<div className="botoes">
+					<button className="btn-danger" type="button" onClick={(event) => {
+						event.preventDefault();
+						dispatch({ type: DADOS_LISTADOS, lista });
+					}}>Cancelar</button>
+					<button className="btn-success" type="submit">Salvar</button>
+				</div>
 			</form>
 		</div>
 	)

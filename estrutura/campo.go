@@ -9,6 +9,7 @@ var tiposValidos []string = []string{
 	"Texto",
 	"Email",
 	"Telefone",
+	"Número",
 }
 
 type Campo struct {

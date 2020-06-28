@@ -2,6 +2,7 @@ Campos
 	Nome, Texto
 	Email, Email
 	Telefone, Telefone, Opcional
+	Idade, Número
 
 Lista
-	Nome, Telefone, Email 
+	Nome, Telefone, Email, Idade
