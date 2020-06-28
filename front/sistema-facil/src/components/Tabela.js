@@ -4,11 +4,26 @@ import {
 	BUSCANDO_CADASTRO,
 	EXCLUINDO_CADASTRO
 } from '../actions';
-import { useTable, usePagination, useSortBy } from 'react-table';
+import { useTable, usePagination, useSortBy, useFilters } from 'react-table';
 import { useDispatch } from 'react-redux';
 import './Tabela.css';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+
+function Filtro({
+	column: { filterValue, setFilter }
+}) {
+	return (
+		<input
+			value={filterValue || ''}
+			onChange={e => {
+				setFilter(e.target.value || undefined);
+			}}
+			placeholder="Buscar..."
+			onClick={e => e.stopPropagation()}
+		/>
+	);
+}
 
 function Tabela({ cadastro, lista }) {
 	let columns = React.useMemo(() => cadastro
@@ -19,6 +34,13 @@ function Tabela({ cadastro, lista }) {
 		}), [cadastro.Campos]);
 
 	const dispatch = useDispatch();
+
+	const defaultColumn = React.useMemo(
+		() => ({
+			Filter: Filtro,
+		}),
+		[]
+	);
 	
 	const {
 		getTableProps,
@@ -34,7 +56,8 @@ function Tabela({ cadastro, lista }) {
 		previousPage,
 		state: { pageIndex },
 	} = useTable(
-		{ columns, data: lista }, 
+		{ columns, data: lista, defaultColumn }, 
+		useFilters,
 		useSortBy,
 		usePagination
 	);
@@ -108,6 +131,9 @@ function Tabela({ cadastro, lista }) {
 										: ' \u2193'
 									: ''}
 							</span>
+							<div>
+								{column.canFilter ? column.render('Filter') : null}
+							</div>
 						</th>
 					))}
 					<th>&nbsp;</th>
