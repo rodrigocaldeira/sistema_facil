@@ -4,6 +4,7 @@ Campos
 	Telefone, Telefone, Opcional
 	Idade, Número
 	Valor, Dinheiro
+	Número, Número Decimal
 
 Lista
 	Nome, Telefone, Email, Idade

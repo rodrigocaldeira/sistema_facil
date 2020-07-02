@@ -10,6 +10,7 @@ var tiposValidos []string = []string{
 	"Email",
 	"Telefone",
 	"Número",
+	"Número Decimal",
 	"Dinheiro",
 }
 
