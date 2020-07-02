@@ -3,6 +3,7 @@ Campos
 	Email, Email
 	Telefone, Telefone, Opcional
 	Idade, Número
+	Valor, Dinheiro
 
 Lista
 	Nome, Telefone, Email, Idade

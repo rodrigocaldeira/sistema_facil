@@ -109,7 +109,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [x] Telefone
   - [x] Número Inteiro
   - [x] Número Decimal (separador de decimal é ponto por enquanto)
-  - [ ] Moeda
+  - [ ] ~~Moeda~~ Dinhero
   - [ ] CPF
   - [ ] CNPJ
   - [ ] Checkbox

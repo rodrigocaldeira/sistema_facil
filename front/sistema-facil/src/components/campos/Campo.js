@@ -18,9 +18,7 @@ class Campo extends React.Component {
 		this.validadores = [];
 	}
 
-	id() {
-		return "__id__" + this.state.nome.toLowerCase().replace(" ", "_");
-	}
+	id = () => "__id__" + this.state.nome.toLowerCase().replace(" ", "_");
 
 	definirValor(valor) {
 		this.setState({ valor, erro: "" });
