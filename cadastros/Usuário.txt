@@ -5,6 +5,7 @@ Campos
 	Idade, Número
 	Valor, Dinheiro
 	Número, Número Decimal
+	CPF, CPF
 
 Lista
 	Nome, Telefone, Email, Idade

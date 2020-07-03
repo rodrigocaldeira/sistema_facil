@@ -4,13 +4,15 @@ import Telefone from './Telefone';
 import Numero from './Numero';
 import NumeroDecimal from './NumeroDecimal';
 import Dinheiro from './Dinheiro';
+import CPF from './CPF';
 
 const tiposDeCampo = {
 	Email: Email,
 	Telefone: Telefone,
 	Número: Numero,
 	Dinheiro: Dinheiro,
-	"Número Decimal": NumeroDecimal
+	"Número Decimal": NumeroDecimal,
+	CPF: CPF
 }
 
 export default function criarCampo(tipo) {
