@@ -109,8 +109,8 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [x] Telefone
   - [x] Número Inteiro
   - [x] Número Decimal (agora com formatação BR)
-  - [ ] ~~Moeda~~ Dinhero
-  - [ ] CPF
+  - [x] ~~Moeda~~ Dinhero
+  - [x] CPF
   - [ ] CNPJ
   - [ ] Checkbox
   - [ ] Lista com única seleção
