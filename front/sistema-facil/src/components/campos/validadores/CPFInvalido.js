@@ -2,35 +2,14 @@ class CPFInvalido {
 	validar(campo) {
 		if (campo.valor) {
 			let valor = campo.valor.replace(/\D/g, "");
-			if (valor.length !== 11) {
+			if (
+				valor.length !== 11 ||
+				/^(\d)\1+$/g.test(valor) ||
+				!this.validarDigito(valor.substring(0, 9), parseInt(valor[9], 10)) || 
+				!this.validarDigito(valor.substring(0, 10), parseInt(valor[10], 10))
+			) {
 				return "O campo " + campo.nome + " possui um CPF inválido";
 			}
-
-			if (this.tudoIgual(valor)) {
-				return "O campo " + campo.nome + " possui um CPF inválido";
-			}
-
-			let soma = 0;
-
-			for (var i = 1; i <= 9; i++) {
-				soma += parseInt(valor[i - 1], 10) * (11 - i);
-			}
-
-			let resto = (soma * 10) % 11;
-			if (resto >= 10) resto = 0;
-			
-			if (resto !== parseInt(valor[9], 10)) return "O campo " + campo.nome + " possui um CPF inválido";
-
-			soma = 0;
-
-			for (var i = 1; i <= 10; i++) {
-				soma += parseInt(valor[i - 1], 10) * (12 - i);
-			}
-
-			resto = (soma * 10) % 11;
-			if (resto >= 10) resto = 0;
-
-			if (resto !== parseInt(valor[10], 10)) return "O campo " + campo.nome + " possui um CPF inválido";
 
 			return "";
 
@@ -38,12 +17,20 @@ class CPFInvalido {
 		return "";
 	}
 
-	tudoIgual(valor) {
-		for (var i = 0; i < valor.length - 1; i++) {
-			if (valor[i] !== valor[i + 1]) return false;
+	validarDigito(texto, digito) {
+		let soma = 0;
+		let base = texto.length + 2;
+		
+		for (var i = 1; i <= texto.length; i++) {
+			soma += parseInt(texto[i - 1], 10) * (base - i);
 		}
-		return true;
+
+		let resto = (soma * 10) % 11;
+		if (resto >= 10) resto = 0;
+
+		return resto === digito;
 	}
+
 }
 
 export default CPFInvalido;
