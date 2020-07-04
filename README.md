@@ -116,7 +116,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [ ] Lista com única seleção
   - [ ] Lista com múltipla seleção
   - [ ] Lista de outro Cadastro existente
-  - [ ] Senha
+  - [x] Senha
   - [ ] Data
   - [ ] Data e Hora
 - [x] Possibilidade de campos opcionais 
