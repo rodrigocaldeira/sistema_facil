@@ -111,7 +111,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [x] Número Decimal (agora com formatação BR)
   - [x] ~~Moeda~~ Dinheiro
   - [x] CPF
-  - [ ] CNPJ
+  - [x] CNPJ
   - [ ] Checkbox
   - [ ] Lista com única seleção
   - [ ] Lista com múltipla seleção
