@@ -6,6 +6,7 @@ Campos
 	Valor, Dinheiro
 	Número, Número Decimal
 	CPF, CPF
+	CNPJ, CNPJ
 
 Lista
 	Nome, Telefone, Email, Idade

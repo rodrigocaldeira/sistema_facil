@@ -13,6 +13,7 @@ var tiposValidos []string = []string{
 	"Número Decimal",
 	"Dinheiro",
 	"CPF",
+	"CNPJ",
 }
 
 type Campo struct {
