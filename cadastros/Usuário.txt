@@ -9,6 +9,7 @@ Campos
 	CNPJ, CNPJ
 	Senha, Senha
 	Data, Data
+	Data e Hora, Data e Hora
 
 Lista
 	Nome, Telefone, Email, Idade, Data

@@ -1,10 +1,9 @@
 import React from 'react';
 import Campo from './Campo';
 import CampoVazio from './validadores/CampoVazio';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import ptBR from 'date-fns/locale/pt-BR';
-registerLocale("ptBR", ptBR);
 
 
 class Data extends Campo  {
@@ -27,7 +26,8 @@ class Data extends Campo  {
 		this.definirValor(date);
 	}
 	
-	render(tipo) {
+	render(dateFormat, showTimeInput) {
+		dateFormat = dateFormat || "dd/MM/yyyy";
 		const { active, erro, nome } = this.state;
 		var { valor } = this.state;
 
@@ -36,20 +36,22 @@ class Data extends Campo  {
 		}
 
 		const className = `campo ${(active || valor) && "active"}`;
+		let propriedadesDoCampo = {
+			id: this.id(),
+			dateFormat,
+			locale: ptBR,
+			selected: valor,
+			placeholderText: nome,
+			onChange: this.change.bind(this),
+			onFocus: () => this.setState({ active: true }),
+			onBlur: this.blur.bind(this),
+			timeFormat: "HH:mm",
+			showTimeInput
+		};
 		
 		return (
 			<div className={className}>
-				<DatePicker
-					id={this.id()}
-					dateFormat="dd/MM/yyyy"
-					locale="ptBR"
-					selected={valor}
-					placeholderText={nome}
-					onChange={this.change.bind(this)}
-					onFocus={() => this.setState({ active: true})}
-					onBlur={this.blur.bind(this)}
-					autoComplete="off"
-				/>
+				{React.createElement(DatePicker, propriedadesDoCampo)}
 				<label htmlFor={this.id()} className={erro && "error"}>
 					{erro || nome}
 				</label>
