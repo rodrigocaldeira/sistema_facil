@@ -12,6 +12,9 @@ class Data extends Campo  {
 		super(props);
 		
 		this.validadores.push(new CampoVazio());
+		this.blur = this.blur.bind(this);
+		this.change = this.change.bind(this);
+		this.focus = this.focus.bind(this);
 	}
 
 	blur(event) {
@@ -24,6 +27,10 @@ class Data extends Campo  {
 
 	change(date, event) {
 		this.definirValor(date);
+	}
+
+	focus(event) {
+		this.setState({ active: true });
 	}
 	
 	render(dateFormat, showTimeSelect) {
@@ -44,13 +51,14 @@ class Data extends Campo  {
 			placeholderText: nome,
 			showMonthDropdown: true,
 			showYearDropdown: true,
-			onChange: this.change.bind(this),
-			onFocus: () => this.setState({ active: true }),
-			onBlur: this.blur.bind(this),
+			onChange: this.change,
+			onFocus: this.focus,
+			onBlur: this.blur,
 			timeCaption: "Hora",
 			timeFormat: "p",
 			timeIntervals: 5,
-			showTimeSelect
+			showTimeSelect,
+			autoComplete: "off"
 		};
 		
 		return (
