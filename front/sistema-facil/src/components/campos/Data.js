@@ -1,8 +1,13 @@
 import React from 'react';
 import Campo from './Campo';
 import CampoVazio from './validadores/CampoVazio';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import ptBR from 'date-fns/locale/pt-BR';
+registerLocale("ptBR", ptBR);
 
-class Texto extends Campo  {
+
+class Data extends Campo  {
 
 	constructor(props) {
 		super(props);
@@ -18,29 +23,31 @@ class Texto extends Campo  {
 		}
 	}
 
-	keyup(event) {}
-	keydown(event) {}
-	
-	change(event) {
-		this.definirValor(event.target.value);
+	change(date, event) {
+		this.definirValor(date);
 	}
 	
-	render() {
-		const { active, valor, erro, nome } = this.state;
+	render(tipo) {
+		const { active, erro, nome } = this.state;
+		var { valor } = this.state;
+
+		if (valor !== "" && typeof valor !== 'object') {
+			valor = new Date(valor);
+		}
+
 		const className = `campo ${(active || valor) && "active"}`;
 		
 		return (
 			<div className={className}>
-				<input
+				<DatePicker
 					id={this.id()}
-					type="text"
-					value={valor}
-					placeholder={nome}
+					dateFormat="dd/MM/yyyy"
+					locale="ptBR"
+					selected={valor}
+					placeholderText={nome}
 					onChange={this.change.bind(this)}
 					onFocus={() => this.setState({ active: true})}
 					onBlur={this.blur.bind(this)}
-					onKeyUp={this.keyup.bind(this)}
-					onKeyDown={this.keydown.bind(this)}
 					autoComplete="off"
 				/>
 				<label htmlFor={this.id()} className={erro && "error"}>
@@ -51,4 +58,4 @@ class Texto extends Campo  {
 	}
 }
 
-export default Texto;
+export default Data;

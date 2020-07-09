@@ -7,6 +7,7 @@ import Dinheiro from './Dinheiro';
 import CPF from './CPF';
 import CNPJ from './CNPJ';
 import Senha from './Senha';
+import Data from './Data';
 
 const tiposDeCampo = {
 	Email: Email,
@@ -16,7 +17,8 @@ const tiposDeCampo = {
 	"Número Decimal": NumeroDecimal,
 	CPF: CPF,
 	CNPJ: CNPJ,
-	Senha: Senha
+	Senha: Senha,
+	Data: Data
 }
 
 export default function criarCampo(tipo) {

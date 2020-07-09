@@ -36,6 +36,7 @@ class SistemaFacil extends React.Component {
 			case EstadoGeral.ListandoDados:
 				listarDados(this.props.cadastro)
 					.then(lista => {
+						this.aplicarMascaraDeData(lista);
 						this.props.onDadosListados({ lista });
 					});
 				break;
@@ -68,6 +69,22 @@ class SistemaFacil extends React.Component {
 			default: return;
 
 		}
+	}
+
+	aplicarMascaraDeData(lista) {
+		this
+			.props
+			.cadastro
+			.Campos
+			.filter(campo => campo.TaNaLista && campo.Tipo === "Data")
+			.map(campo => campo.Nome.toLowerCase())
+			.forEach(campo => {
+				lista.forEach(registro => {
+					if (registro[campo] !== undefined && registro[campo] !== "") {
+						registro[campo] = new Date(registro[campo]).toLocaleDateString("pt-BR");
+					}
+				})
+			});
 	}
 
 	getTelaAtual() {

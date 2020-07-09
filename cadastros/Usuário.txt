@@ -8,6 +8,7 @@ Campos
 	CPF, CPF
 	CNPJ, CNPJ
 	Senha, Senha
+	Data, Data
 
 Lista
-	Nome, Telefone, Email, Idade
+	Nome, Telefone, Email, Idade, Data

@@ -69,7 +69,7 @@
 	color: #fff;
 }
 
-.campo input + label {
+.campo label {
 	position: relative;
 	top: -3vh;
 	left: 10px;
@@ -88,13 +88,13 @@
 	transition: 0.1s all ease-in-out;
 }
 
-.campo.active input + label {
+.campo.active label {
 	top: -7vh;
 	opacity: 1;
 	color: #8293b5;
 }
 
-.campo input + label.error {
+.campo label.error {
 	color: #ec392f;
 }
 

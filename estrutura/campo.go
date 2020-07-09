@@ -15,6 +15,7 @@ var tiposValidos []string = []string{
 	"CPF",
 	"CNPJ",
 	"Senha",
+	"Data",
 }
 
 type Campo struct {
