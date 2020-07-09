@@ -76,12 +76,17 @@ class SistemaFacil extends React.Component {
 			.props
 			.cadastro
 			.Campos
-			.filter(campo => campo.TaNaLista && campo.Tipo === "Data")
-			.map(campo => campo.Nome.toLowerCase())
+			.filter(campo => campo.TaNaLista && (campo.Tipo === "Data" || campo.Tipo === "Data e Hora"))
+			.map(campo => { return { nome: campo.Nome.toLowerCase(), tipo: campo.Tipo }; })
 			.forEach(campo => {
 				lista.forEach(registro => {
-					if (registro[campo] !== undefined && registro[campo] !== "") {
-						registro[campo] = new Date(registro[campo]).toLocaleDateString("pt-BR");
+					if (registro[campo.nome] !== undefined && registro[campo.nome] !== "") {
+						if (campo.tipo === "Data") {
+							registro[campo.nome] = new Date(registro[campo.nome]).toLocaleDateString("pt-BR");
+						} else {
+							registro[campo.nome] = new Date(registro[campo.nome]).toLocaleString("pt-BR");
+						}
+
 					}
 				})
 			});

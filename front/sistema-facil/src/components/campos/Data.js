@@ -26,8 +26,8 @@ class Data extends Campo  {
 		this.definirValor(date);
 	}
 	
-	render(dateFormat, showTimeInput) {
-		dateFormat = dateFormat || "dd/MM/yyyy";
+	render(dateFormat, showTimeSelect) {
+		dateFormat = dateFormat || "P";
 		const { active, erro, nome } = this.state;
 		var { valor } = this.state;
 
@@ -42,11 +42,15 @@ class Data extends Campo  {
 			locale: ptBR,
 			selected: valor,
 			placeholderText: nome,
+			showMonthDropdown: true,
+			showYearDropdown: true,
 			onChange: this.change.bind(this),
 			onFocus: () => this.setState({ active: true }),
 			onBlur: this.blur.bind(this),
-			timeFormat: "HH:mm",
-			showTimeInput
+			timeCaption: "Hora",
+			timeFormat: "p",
+			timeIntervals: 5,
+			showTimeSelect
 		};
 		
 		return (

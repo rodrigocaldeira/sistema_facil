@@ -1,7 +1,7 @@
 table {
 	border-spacing: 0;
 	min-width: 70vw;
-	border: 5px solid #bbb;
+	border: 5px solid #eee;
 	border-radius: 4px 4px;
 	background-color: #fafafa;
 	color: #090909;
@@ -12,8 +12,8 @@ tr {
 }
 
 thead {
-	background-color: #555;
-	color: #bbb;
+	background-color: #282c34;
+	color: #eee;
 }
 
 tbody tr:hover {
