@@ -22,6 +22,12 @@
 	padding-top: 1vh;
 }
 
+.campo.active > .liga-desliga {
+	margin-top: 2vh;
+	padding-left: 1vw;
+	height: 43px;
+}
+
 
 .campo input {
 	width: 95%;

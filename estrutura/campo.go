@@ -17,6 +17,7 @@ var tiposValidos []string = []string{
 	"Senha",
 	"Data",
 	"Data e Hora",
+	"Liga/Desliga",
 }
 
 type Campo struct {

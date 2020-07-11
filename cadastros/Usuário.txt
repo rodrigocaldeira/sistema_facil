@@ -10,6 +10,7 @@ Campos
 	Senha, Senha
 	Data, Data
 	Data e Hora, Data e Hora
+	Pode isso?, Liga/Desliga
 
 Lista
 	Nome, Telefone, Email, Idade, Data e Hora

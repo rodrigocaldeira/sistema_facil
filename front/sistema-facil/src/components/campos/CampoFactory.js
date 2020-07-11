@@ -9,6 +9,7 @@ import CNPJ from './CNPJ';
 import Senha from './Senha';
 import Data from './Data';
 import DataHora from './DataHora';
+import LigaDesliga from './LigaDesliga';
 
 const tiposDeCampo = {
 	Email: Email,
@@ -20,7 +21,8 @@ const tiposDeCampo = {
 	CNPJ: CNPJ,
 	Senha: Senha,
 	Data: Data,
-	"Data e Hora": DataHora
+	"Data e Hora": DataHora,
+	"Liga/Desliga": LigaDesliga
 }
 
 export default function criarCampo(tipo) {

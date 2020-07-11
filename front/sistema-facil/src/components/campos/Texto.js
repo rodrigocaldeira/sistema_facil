@@ -34,7 +34,8 @@ class Texto extends Campo  {
 		this.setState({ active: true });
 	}
 	
-	render() {
+	render(tipo) {
+		tipo = tipo || "text";
 		const { active, valor, erro, nome } = this.state;
 		const className = `campo ${(active || valor) && "active"}`;
 		
@@ -42,7 +43,7 @@ class Texto extends Campo  {
 			<div className={className}>
 				<input
 					id={this.id()}
-					type="text"
+					type={tipo}
 					value={valor}
 					placeholder={nome}
 					onChange={this.change}
