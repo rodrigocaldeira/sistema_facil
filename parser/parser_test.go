@@ -46,6 +46,21 @@ Campos
 	Nome, Texto, Opcional
 `
 
+var arquivoComCampoLista = `
+Campos
+	Campo Lista, Lista, Opções Opção 1; Opção 2 
+`
+
+var arquivoComCampoListaMasSemOpcoes = `
+Campos
+	Campo Lista, Lista
+`
+
+var arquivoComCampoListaMasSemAsOpcoesDefinidas = `
+Campos
+	Campo Lista, Lista, Opções
+`
+
 var arquivoComTagDeListaMasSemLista string = `
 Lista
 `
@@ -54,6 +69,48 @@ var arquivoComListaComUmCampo string = `
 Lista
 	Nome
 `
+
+func TestArquivoComCampoLista(t *testing.T) {
+	campos, err := LerCampos(arquivoComCampoLista)
+
+	campo := campos[0]
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(campo.Opcoes) != 2 {
+		t.Fatal("O campo deveria ter opções!")
+	}
+
+	if campo.Opcoes[0] != "Opção 1" && campo.Opcoes[1] != "Opção 2" {
+		t.Fatal(fmt.Sprintf("O campo deveria ter opções, mas sei lá o que aconteceu: %v", campo))
+	}
+}
+
+func TestArquivoComCampoListaMasSemOpcoes(t *testing.T) {
+	_, err := LerCampos(arquivoComCampoListaMasSemOpcoes)
+
+	if err == nil {
+		t.Fatal("Deveria ter dado erro aqui! Campo lista sem opções!")
+	}
+
+	if err.Error() != "O campo Campo Lista deve ter opções" {
+		t.Fatal(fmt.Sprintf("Deveria ter dado erro de campo lista sem opções, mas deu outro erro: %s", err))
+	}
+}
+
+func TestArquivoComCampoListaMasSemAsOpcoesDefinidas(t *testing.T) {
+	_, err := LerCampos(arquivoComCampoListaMasSemAsOpcoesDefinidas)
+
+	if err == nil {
+		t.Fatal("Deveria ter dado erro aqui! Campo lista sem opções!")
+	}
+
+	if err.Error() != "O campo Campo Lista deve ter opções" {
+		t.Fatal(fmt.Sprintf("Deveria ter dado erro de campo lista sem opções, mas deu outro erro: %s", err))
+	}
+}
 
 func TestLerLista(t *testing.T) {
 	lista, err := LerLista(arquivoComLista)
