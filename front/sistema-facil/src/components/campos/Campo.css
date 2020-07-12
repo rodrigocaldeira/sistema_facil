@@ -28,6 +28,15 @@
 	height: 43px;
 }
 
+.campo.active > .lista {
+	margin-top: 2vh;
+	color: #282828;
+	font-size: 16px;
+}
+
+.campo.active > .lista input {
+	height: 100%;
+}
 
 .campo input {
 	width: 95%;
@@ -96,6 +105,12 @@
 
 .campo.active label {
 	top: -7vh;
+	opacity: 1;
+	color: #8293b5;
+}
+
+.campo.active.lista label {
+	top: -6vh;
 	opacity: 1;
 	color: #8293b5;
 }
