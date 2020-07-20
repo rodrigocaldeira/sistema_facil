@@ -116,6 +116,6 @@
 }
 
 .campo label.error {
-	color: #ec392f;
+	color: #ec392f !important;
 }
 

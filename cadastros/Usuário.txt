@@ -12,6 +12,7 @@ Campos
 	Data e Hora, Data e Hora
 	Pode isso?, Liga/Desliga
 	Lista, Lista, Opções Opção 1; Opção 2; Opção 3
+	Produtos, Lista, Opções Produto 01; Produto 02; Produto 03, Multi opções
 
 Lista
 	Nome, Telefone, Email, Idade, Data e Hora

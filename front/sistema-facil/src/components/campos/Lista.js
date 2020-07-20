@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import Campo from './Campo';
+import CampoVazio from './validadores/CampoVazio';
 
 class Lista extends Campo {
 
@@ -8,6 +9,7 @@ class Lista extends Campo {
 		super(props);
 
 		this.change = this.change.bind(this);
+		this.validadores.push(new CampoVazio());
 	}
 
 	change(option, event) {
@@ -15,8 +17,10 @@ class Lista extends Campo {
 	}
 
 	render() {
-		const { valor, nome, opcoes } = this.state;
+		const { valor, nome, opcoes, multiOpcoes, erro } = this.state;
 		const className = 'campo active lista';
+
+		let isMulti = multiOpcoes || false;
 
 		let propriedadesDoCampo = {
 			id: this.id(),
@@ -24,13 +28,16 @@ class Lista extends Campo {
 			className: 'lista',
 			value: valor,
 			options: this.montarOpcoes(opcoes),
-			placeholder: "Selecione..."
+			placeholder: "Selecione...",
+			isMulti
 		}
 
 		return(
 			<div className={className}>
 				{React.createElement(Select, propriedadesDoCampo)}
-				<label htmlFor={this.id()}>{nome}</label>
+				<label htmlFor={this.id()} className={erro && "error"}>
+					{erro || nome}
+				</label>
 			</div>
 		)
 	}

@@ -13,7 +13,8 @@ class Campo extends React.Component {
 			nome: this.props.campo.nome,
 			tipo: this.props.campo.tipo,
 			opcional: this.props.campo.opcional,
-			opcoes: this.props.campo.opcoes
+			opcoes: this.props.campo.opcoes,
+			multiOpcoes: this.props.campo.multiOpcoes
 		};
 		
 		this.validadores = [];

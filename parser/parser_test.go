@@ -70,6 +70,25 @@ Lista
 	Nome
 `
 
+var arquivoComCampoListaDeMultiOpcoes string = ` 
+Campos
+	Campo Lista, Lista, Opções Opção 1; Opção 2, Multi opções
+`
+
+func TestArquivoComCampoListaDeMultiOpcoes(t *testing.T) {
+	campos, err := LerCampos(arquivoComCampoListaDeMultiOpcoes)
+
+	campo := campos[0]
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !campo.MultiOpcoes {
+		t.Fatal("O campo deveria ser de multi opções")
+	}
+}
+
 func TestArquivoComCampoLista(t *testing.T) {
 	campos, err := LerCampos(arquivoComCampoLista)
 

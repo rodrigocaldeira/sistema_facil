@@ -114,7 +114,7 @@ porém nas telas de inclusão e edição dos registros, todos os campos serão e
   - [x] CNPJ
   - [x] ~~Checkbox~~ Liga/Desliga
   - [x] Lista com única seleção
-  - [ ] Lista com múltipla seleção
+  - [x] Lista com múltipla seleção
   - [ ] Lista de outro Cadastro existente
   - [x] Senha
   - [x] Data

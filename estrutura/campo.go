@@ -23,11 +23,12 @@ var tiposValidos []string = []string{
 }
 
 type Campo struct {
-	Nome      string
-	Tipo      string
-	TaNaLista bool
-	Opcional  bool
-	Opcoes    []string
+	Nome        string
+	Tipo        string
+	TaNaLista   bool
+	Opcional    bool
+	Opcoes      []string
+	MultiOpcoes bool
 }
 
 func NewCampo(nome string, tipo string, opcoes ...string) (*Campo, error) {
@@ -36,11 +37,12 @@ func NewCampo(nome string, tipo string, opcoes ...string) (*Campo, error) {
 	}
 
 	campo := &Campo{
-		Nome:      nome,
-		Tipo:      tipo,
-		TaNaLista: false,
-		Opcional:  false,
-		Opcoes:    make([]string, 0),
+		Nome:        nome,
+		Tipo:        tipo,
+		TaNaLista:   false,
+		Opcional:    false,
+		Opcoes:      make([]string, 0),
+		MultiOpcoes: false,
 	}
 
 	verificarCampoOpcional(campo, opcoes)
@@ -89,6 +91,12 @@ func verificarCampoLista(campo *Campo, opcoes []string) error {
 
 		if len(campo.Opcoes) == 0 {
 			return fmt.Errorf("O campo %s deve ter opções", campo.Nome)
+		}
+
+		for _, opcao := range opcoes {
+			if strings.TrimSpace(opcao) == "Multi opções" {
+				campo.MultiOpcoes = true
+			}
 		}
 	}
 
