@@ -105,7 +105,6 @@ func TestArquivoComCampoDeOutroCadastroMalFormatado(t *testing.T) {
 	if err.Error() != "Não foi possível achar a referência para o campo Usuário" {
 		t.Fatal(fmt.Sprintf("Deveria ter dado erro referência, mas veio isso: %v", err))
 	}
-
 }
 
 func TestArquivoComCampoDeOutroCadastroSemInformarOCadastro(t *testing.T) {
@@ -118,17 +117,16 @@ func TestArquivoComCampoDeOutroCadastroSemInformarOCadastro(t *testing.T) {
 	if err.Error() != "Não foi possível achar a referência para o campo Usuário" {
 		t.Fatal(fmt.Sprintf("Deveria ter dado erro referência, mas veio isso: %v", err))
 	}
-
 }
 
 func TestArquivoComCampoDeOutroCadastroComNomesComplexos(t *testing.T) {
 	campos, err := LerCampos(arquivoComCampoDeOutroCadastroComNomesComplexos)
 
-	campo := campos[0]
-
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	campo := campos[0]
 
 	if campo.CadastroReferencia.Nome != "Usuário de nome Complexo" {
 		t.Fatal(fmt.Sprintf("O nome da referência está errado. Veio isso: %s", campo.CadastroReferencia.Nome))
@@ -142,11 +140,11 @@ func TestArquivoComCampoDeOutroCadastroComNomesComplexos(t *testing.T) {
 func TestArquivoComCampoDeOutroCadastro(t *testing.T) {
 	campos, err := LerCampos(arquivoComCampoDeOutroCadastro)
 
-	campo := campos[0]
-
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	campo := campos[0]
 
 	if campo.Tipo != "Cadastro" {
 		t.Fatal(fmt.Sprintf("O campo deveria ser do tipo Cadastro, mas veio isso: %s", campo.Tipo))
@@ -163,17 +161,16 @@ func TestArquivoComCampoDeOutroCadastro(t *testing.T) {
 	if campo.CadastroReferencia.ExibirCampo != "Nome" {
 		t.Fatal(fmt.Sprintf("Deveria ter a referência do campo Nome do cadastro Usuário, mas veio isso: %s", campo.CadastroReferencia.ExibirCampo))
 	}
-
 }
 
 func TestArquivoComCampoListaDeMultiOpcoes(t *testing.T) {
 	campos, err := LerCampos(arquivoComCampoListaDeMultiOpcoes)
 
-	campo := campos[0]
-
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	campo := campos[0]
 
 	if !campo.MultiOpcoes {
 		t.Fatal("O campo deveria ser de multi opções")
@@ -183,11 +180,11 @@ func TestArquivoComCampoListaDeMultiOpcoes(t *testing.T) {
 func TestArquivoComCampoLista(t *testing.T) {
 	campos, err := LerCampos(arquivoComCampoLista)
 
-	campo := campos[0]
-
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	campo := campos[0]
 
 	if len(campo.Opcoes) != 2 {
 		t.Fatal("O campo deveria ter opções!")
