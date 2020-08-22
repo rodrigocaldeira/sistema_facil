@@ -75,6 +75,97 @@ Campos
 	Campo Lista, Lista, Opções Opção 1; Opção 2, Multi opções
 `
 
+var arquivoComCampoDeOutroCadastro string = `
+Campos
+	Usuário, Cadastro, Exibir campo "Nome" do "Usuário"
+`
+
+var arquivoComCampoDeOutroCadastroComNomesComplexos string = `
+Campos
+	Usuário, Cadastro, Exibir campo "Nome de Teste" do "Usuário de nome Complexo"
+`
+
+var arquivoComCampoDeOutroCadastroSemInformarOCadastro string = `
+Campos
+	Usuário, Cadastro, Exibir campo "Nome"
+`
+
+var arquivoComCampoDeOutroCadastroMalFormatado string = `
+Campos
+	Usuário, Cadastro
+`
+
+func TestArquivoComCampoDeOutroCadastroMalFormatado(t *testing.T) {
+	_, err := LerCampos(arquivoComCampoDeOutroCadastroMalFormatado)
+
+	if err == nil {
+		t.Fatal("Deveria ter dado erro aqui")
+	}
+
+	if err.Error() != "Não foi possível achar a referência para o campo Usuário" {
+		t.Fatal(fmt.Sprintf("Deveria ter dado erro referência, mas veio isso: %v", err))
+	}
+
+}
+
+func TestArquivoComCampoDeOutroCadastroSemInformarOCadastro(t *testing.T) {
+	_, err := LerCampos(arquivoComCampoDeOutroCadastroSemInformarOCadastro)
+
+	if err == nil {
+		t.Fatal("Deveria ter dado erro aqui")
+	}
+
+	if err.Error() != "Não foi possível achar a referência para o campo Usuário" {
+		t.Fatal(fmt.Sprintf("Deveria ter dado erro referência, mas veio isso: %v", err))
+	}
+
+}
+
+func TestArquivoComCampoDeOutroCadastroComNomesComplexos(t *testing.T) {
+	campos, err := LerCampos(arquivoComCampoDeOutroCadastroComNomesComplexos)
+
+	campo := campos[0]
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if campo.CadastroReferencia.Nome != "Usuário de nome Complexo" {
+		t.Fatal(fmt.Sprintf("O nome da referência está errado. Veio isso: %s", campo.CadastroReferencia.Nome))
+	}
+
+	if campo.CadastroReferencia.ExibirCampo != "Nome de Teste" {
+		t.Fatal(fmt.Sprintf("O nome do campo está errado. Veio isso: %s", campo.CadastroReferencia.ExibirCampo))
+	}
+}
+
+func TestArquivoComCampoDeOutroCadastro(t *testing.T) {
+	campos, err := LerCampos(arquivoComCampoDeOutroCadastro)
+
+	campo := campos[0]
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if campo.Tipo != "Cadastro" {
+		t.Fatal(fmt.Sprintf("O campo deveria ser do tipo Cadastro, mas veio isso: %s", campo.Tipo))
+	}
+
+	if campo.CadastroReferencia == nil {
+		t.Fatal("Deveria ter a definição do cadastro de referência")
+	}
+
+	if campo.CadastroReferencia.Nome != "Usuário" {
+		t.Fatal(fmt.Sprintf("Deveria ter a referência do cadastro Usuário, mas veio isso: %s", campo.CadastroReferencia.Nome))
+	}
+
+	if campo.CadastroReferencia.ExibirCampo != "Nome" {
+		t.Fatal(fmt.Sprintf("Deveria ter a referência do campo Nome do cadastro Usuário, mas veio isso: %s", campo.CadastroReferencia.ExibirCampo))
+	}
+
+}
+
 func TestArquivoComCampoListaDeMultiOpcoes(t *testing.T) {
 	campos, err := LerCampos(arquivoComCampoListaDeMultiOpcoes)
 
